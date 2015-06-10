@@ -1,0 +1,34 @@
+#comic_wrap {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	padding-top: 50px;
+	padding-bottom: 0px;
+	background-color: #000000;
+}
+
+#mainContent {
+	position: inherit !important;
+}
+
+.hideContent > * {
+	display: none;
+}
+
+.hideContent > #comic_wrap {
+	display: block;
+}
+
+#footer_utilities {
+	margin-top: 40px;
+	padding: 30px 30px;
+}
+
+.zoom_notice {
+	display: none !important;
+}
+
+.moderation_bar {
+	display: none !important;
+}

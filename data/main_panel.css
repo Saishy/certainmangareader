@@ -1,0 +1,397 @@
+html, body {
+	width: 508px;
+	height: 380px;
+	font-family: Roboto, Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	color: #000000;
+	border-radius: 5px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+body {
+	display: flex;
+	flex-flow: column nowrap;
+	background-color: #e1e1e1;
+	border: 2px solid #ffffff;
+}
+
+a {
+	color: inherit; /* blue colors for links too */
+	text-decoration: inherit; /* no underline */
+}
+
+#CMangaMainPanel {
+	padding: 4px;
+	line-height: 16px;
+}
+
+#CMangaIcon {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-right: 4px;
+	background-image: url('img/icon-16.png');
+}
+
+#CMangaSettings {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-left: 280px;
+	cursor: pointer;
+}
+
+#CMangaSettings > img {
+	display: block;
+	width: 16px;
+	height: 16px;
+}
+
+#CMangaAddonName {
+	display: inline-block;
+	font-size: 12px;
+	font-weight: 400;
+}
+
+#CMangaMainPanel > div {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 16px;
+}
+
+#CMangaSettingsMenu {
+	width: 480px;
+	margin-top: 8px;
+	padding: 8px 10px 12px 10px;
+	border-top: 1px solid #ebebeb;
+	border-bottom: 2px solid #ffffff;
+	border-radius: 0 0 8px 8px;
+	max-height: 86px;
+	overflow: hidden;
+	transition: all 0.3s ease;
+}
+
+#CMangaSettingsMenu.hidden {
+	max-height: 0px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.CMangaCheckBoxDiv {
+	margin-bottom: 4px;
+}
+
+.CMangaCheckBoxDiv > label {
+	margin-right: 8px;
+	margin-bottom: 4px;
+}
+
+.CMangaCompact, #CMangaInfinite {
+	margin-left: 8px;
+}
+
+.CMangaSelectLabel {
+	display: inline-block;
+	width: 120px;
+	font-size: 14px;
+}
+
+#CMangaUpdateTime, #CMangaMaxUpdateTime {
+	text-indent: 2px;
+	width: 90px;
+	margin-left: 2px;
+	margin-right: 8px;
+}
+
+#CMangaUpdateTime option, #CMangaMaxUpdateTime option {
+	width: 100%;
+	text-indent: 2px;
+}
+
+#CMangaMaxUpdateTimeContainer {
+	display: block;
+	margin-top: 4px;
+	overflow: hidden;
+	transition: all 0.3s ease;
+	max-height: 20px;
+}
+
+#CMangaMaxUpdateTimeContainer.hidden {
+	max-height: 0;
+	margin-top: 0;
+}
+
+#CMangaContainer {
+	padding: 0 4px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.CMangaName {
+	display: inline-block;
+	width: 190px;
+	vertical-align: middle;
+	font-weight: 500;
+	font-size: 15px;
+	position: relative;
+	z-index: 1;
+	padding: 0 6px;
+}
+
+.CMangaNameLink {
+	cursor: pointer;
+}
+
+.CMangaSelector {
+	width: 204px;
+	border: 0;
+	height: 18px;
+	cursor: pointer;
+	font-size: 12px;
+	font-family: Roboto, Arial, sans-serif;
+}
+
+.CMangaSelector option {
+	min-width: 100%;
+	max-width: 240px;
+	font-size: 12px;
+	font-family: Roboto, Arial, sans-serif;
+}
+
+.CMangaLine .CMangaSite {
+	display: none;
+}
+
+.CMangaLine > * {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.CMangaReadChapter, .CMangaMarkAsRead, .CMangaRemove {
+	width: 16px;
+	height: 16px;
+	line-height: 16px;
+	margin-left: 5px;
+	text-align: center;
+	border: 0;
+	cursor: pointer;
+}
+
+.CMangaLineColumn {
+	display: inline-block;
+	vertical-align: middle;
+	width: 274px;
+	margin-left: 4px;
+}
+
+.CMangaLine {
+	width: 100%;
+}
+
+.CMangaLine + .CMangaLine {
+	margin-top: 4px;
+}
+
+.CMangaList {
+	padding: 4px 4px;
+	width: 487px;
+	margin-top: 2px;
+	background-color: #ebebeb;
+}
+
+.CMangaNameBg {
+	background-color: #ffffff;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	opacity: 0.5;
+}
+
+.fullRead {
+	background-color: #d9e10a;
+}
+
+.notRead {
+	background-color: #f47575;
+}
+
+/* BIG LAYOUT SCHEME */
+
+.CMangaBigLayout {
+
+}
+
+.CMangaBigLayout .CMangaList {
+	overflow: hidden;
+	padding: 4px;
+	height: 85px;
+}
+
+.CMangaCover {
+	display: inline-block;
+	vertical-align: top;
+	width: 60px;
+	height: 85px;
+	background-size: cover;
+	background-color: #FFFFFF;
+}
+
+.CMangaBigLayout .CMangaLine {
+	display: inline-block;
+	position: relative;
+	width: 416px;
+	height: 100%;
+	margin-left: 4px;
+}
+
+.CMangaBigLayout .CMangaName {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: top;
+	width: 403px;
+	height: 17px;
+	line-height: 17px;
+}
+
+.CMangaText {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-top: 6px;
+	font-size: 11px;
+}
+
+.CMangaLabel {
+	font-size: 14px;
+}
+
+.CMangaBigLayout .CMangaSelector {
+	width: 268px;
+	margin-left: 4px;
+}
+
+.CMangaBigLayout .CMangaSelector option {
+	min-width: 100%;
+	max-width: 304px;
+}
+
+.CMangaLastUpdateTime {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	font-size: 12px;
+}
+
+.CMangaSiteIcon {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 16px;
+	height: 16px;
+}
+
+/* Switch CSS */
+
+.CMangaMPSwitch {
+	margin-left: 8px;
+}
+
+.onoffswitch {
+	position: relative;
+	width: 32px;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select: none;
+}
+
+.onoffswitch-checkbox {
+	display: none;
+}
+
+.onoffswitch-label {
+	display: block; overflow: hidden; cursor: pointer;
+	border: 2px solid #BBBBBB; border-radius: 6px;
+}
+
+.onoffswitch-inner {
+	display: block; width: 200%; margin-left: -100%;
+	-moz-transition: margin 0.3s ease; -webkit-transition: margin 0.3s ease;
+	-o-transition: margin 0.3s ease; transition: margin 0.3s ease;
+}
+
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+	display: block; float: left; width: 50%; height: 12px; padding: 0; line-height: 12px;
+	font-size: 10px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+.onoffswitch-inner:before {
+	content: "";
+	padding-left: 5px;
+	background-color: #D9E10A; color: #FFFFFF;
+}
+
+.onoffswitch-inner:after {
+	content: "";
+	padding-right: 5px;
+	background-color: #F47575; color: #FFFFFF;
+	text-align: right;
+}
+
+.onoffswitch-switch {
+	display: block; width: 10px; margin: 0px;
+	background: #FFFFFF;
+	border: 2px solid #BBBBBB; border-radius: 6px;
+	position: absolute; top: 0; bottom: 0; right: 21px;
+	-moz-transition: all 0.3s ease; -webkit-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease; transition: all 0.3s ease;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+	margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+	right: 0px;
+}
+
+/* Checkbox CSS */
+
+input[type=checkbox].css-checkbox {
+	position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+	padding-left:21px;
+	height:16px;
+	display:inline-block;
+	line-height:16px;
+	background-repeat:no-repeat;
+	background-position: 0 0;
+	font-size: 12px;
+	font-weight: 300;
+	vertical-align:middle;
+	cursor:pointer;
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+	background-position: 0 -16px;
+}
+
+label.css-label {
+	background-image: url('img/check-box.png');
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}

@@ -1,0 +1,11 @@
+body {
+	background-color: #000000;
+}
+
+.subnav {
+	display: none;
+}
+
+#reader-leader, #reader-sky {
+	display: none !important;
+}

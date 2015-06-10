@@ -1,0 +1,146 @@
+.CMangaWrapper {
+}
+
+.CMangaPagePerPage .mangaPage {
+	display: none;
+}
+
+.CMangaPagePerPage .mangaPage.CMangaPageActive {
+	display: block;
+}
+
+.CMangaPagePerPage .mangaPage #CMangaPageControls {
+	display: block;
+}
+
+#CMangaPageControls {
+	display: none;
+	-moz-user-select: none;
+	user-select: none;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	left: 0;
+	top: 0;
+}
+
+#CMangaPageControlBack {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 33%;
+	height: 100%;
+	cursor: pointer;
+}
+
+#CMangaPageControlBack:hover {
+	background: url('../img/back-page-128.png') center no-repeat;
+	opacity: 0.4;
+}
+
+#CMangaPageControlBack.CMAtFirstPage {
+	/*display: none;*/
+}
+
+#CMangaPageControlNext {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 33%;
+	height: 100%;
+	cursor: pointer;
+}
+
+#CMangaPageControlNext:hover {
+	background: url('../img/next-page-128.png') center no-repeat;
+	opacity: 0.4;
+}
+
+#CMangaPageControlNext.CMAtLastPage {
+	/*display: none;*/
+}
+
+.pageSet {
+	-moz-user-select: none;
+	user-select: none;
+}
+
+.pageSet.twoColumn {
+	margin-top: 20px;
+}
+
+.mangaPage {
+	position: relative;
+	min-width: 80px;
+	min-height: 80px;
+	background: url('../img/circle-loading.gif') center no-repeat;
+	background-size: 32px;
+}
+
+.inverted .mangaPage {
+	display: inline-block;
+}
+
+.inverted .mangaPage + .mangaPage {
+	margin-left: 4px;
+}
+
+.mangaPage > img {
+	max-width: 99%;
+	height: auto;
+	margin-top: 20px;
+}
+
+.inverted .mangaPage > img {
+	max-width: 100%;
+}
+
+.mangaPage > .pageMarker {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 36px;
+	height: 20px;
+	line-height: 20px;
+	background-color: #000000;
+	color: #ffffff;
+	font-family: Roboto,sans-serif;
+	font-size: 18px;
+	border-radius: 5px 5px 0px 0px;
+	margin-left: -18px;
+	opacity: 0.5;
+	cursor: default;
+}
+
+.pageMarkerDisabled .pageMarker {
+	display: none;
+}
+
+.mangaPage > .pageMarker:hover {
+	opacity: 1;
+}
+
+#CMRChaptersButtons {
+	width: 100%;
+	margin-top: 20px;
+	text-align: center;
+}
+
+#CMRChaptersButtons > a:hover {
+	color: #ffff00;
+}
+
+.CMangaPagePerPage #CMRChaptersButtons {
+	display: none;
+}
+
+#CMRChaptersButtons > a {
+	display: inline-block;
+	margin-right: 150px;
+	margin-left: 150px;
+	background-color: #000000;
+	color: #ffffff;
+	cursor: pointer;
+	padding: 3px 5px;
+	border-radius: 8px;
+}

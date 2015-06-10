@@ -1,0 +1,60 @@
+<html>
+<head>
+</head>
+<body>
+	<div id="CMangaMainPanel">
+		<div id="CMangaIcon"></div>
+		<div id="CMangaAddonName"><span id="easteregg">A</span> Certain Manga Reader</div>
+		<div class="onoffswitch CMangaMPSwitch">
+			<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="CMangaSwitch" checked>
+			<label class="onoffswitch-label" for="CMangaSwitch">
+				<span class="onoffswitch-inner"></span>
+				<span class="onoffswitch-switch"></span>
+			</label>
+		</div>
+		<div id="CMangaSettings"><img title="Settings" src="img/gear-16.png"></div>
+		<div id="CMangaSettingsMenu" class="hidden">
+			<div class="CMangaCheckBoxDiv">
+				<input type="checkbox" name="CMangaNotificationCheck" id="CMangaNotifications" class="css-checkbox"/>
+				<label for="CMangaNotifications" class="css-label">Display Notifications</label>
+				<input type="checkbox" name="CMangaCompactCheck" id="CMangaCompact" class="css-checkbox"/>
+				<label for="CMangaCompact" class="css-label">Compact Design</label>
+				<input type="checkbox" name="CMangaPageMarkCheck" id="CMangaPageCheck" class="css-checkbox"/>
+				<label for="CMangaPageCheck" class="css-label">Show Page Numbers</label>
+				<input type="checkbox" name="CMangaInfiniteCheck" id="CMangaInfinite" class="css-checkbox"/>
+				<label for="CMangaInfinite" class="css-label">Infinite Scrolling</label>
+			</div>
+
+			<label class="CMangaSelectLabel" for="CMangaUpdateTime">Update every: </label>
+			<select id="CMangaUpdateTime">
+				<option value="-1">Never</option>
+				<option value="3600000">1 Hour</option>
+				<option value="7200000">2 Hours</option>
+				<option value="14400000">4 Hours</option>
+				<option value="28800000">8 Hours</option>
+				<option value="43200000">12 Hours</option>
+				<option value="86400000">24 Hours</option>
+				<option value="259200000">3 Days</option>
+				<option value="604800000">7 Days</option>
+			</select>
+
+			<input type="checkbox" name="CMangaNetCheck" id="CMangaNetSave" class="css-checkbox"/>
+			<label for="CMangaNetSave" class="css-label">Network Saving Mode</label>
+
+			<div id="CMangaMaxUpdateTimeContainer">
+				<label class="CMangaSelectLabel" for="CMangaMaxUpdateTime">Maximum Time: </label>
+				<select id="CMangaMaxUpdateTime">
+					<option value="86400000">24 Hours</option>
+					<option value="259200000">3 Days</option>
+					<option value="604800000">7 Days</option>
+					<option value="1209600000">14 Days</option>
+					<option value="2592000000">30 Days</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div id="CMangaContainer">
+		<div id="CMangaViewLayout"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+#CMangaTopMenu {
+	position: fixed;
+	top: -35px;
+	left: 50%;
+	z-index: 999999;
+	background-color: #000000;
+	color: #ffffff;
+	width: 450px;
+	padding: 10px 12px;
+	border-radius: 0 0 20px 20px;
+	margin-left: -245px;
+	transition: top 0.5s ease;
+	text-align: center;
+}
+
+#CMangaTopMenu:hover {
+	top: 0;
+	background-color: #000000;
+}
+
+#CMangaTopMenu.BeginFlashMenu {
+	background-color: #FFA500;
+	top: 0;
+}
+
+#CMangaTopMenu > * {
+	display: inline-block;
+	line-height: 20px;
+	font-family: Verdana, "sans-serif";
+	font-size: 13px;
+	vertical-align: middle;
+}
+
+#CMangaTopMenu > div:hover {
+	margin-top: -4px;
+}
+
+#CMangaAdd, #CMangaRemove {
+	width: 24px;
+	height: 24px;
+	text-align: center;
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.subscribed #CMangaAdd {
+	display: none;
+}
+
+#CMangaRemove {
+	display: none;
+}
+
+.subscribed #CMangaRemove {
+	display: inline-block;
+}
+
+#CMangaHome {
+	width: 24px;
+	height: 24px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+#CMangaBack, #CMangaNext {
+	width: 24px;
+	height: 24px;
+	text-align: center;
+	cursor: pointer;
+}
+
+/*#CMangaNext {
+	background-image: url('img/next-24.png');
+}
+
+#CMangaBack {
+	background-image: url('img/back-24.png');
+}*/
+
+#CMangaSelect {
+	width: 250px;
+	height: 21px;
+	line-height: 17px;
+	margin-left: 8px;
+	margin-right: 8px;
+	margin-bottom: 0;
+	border: 0;
+	border-radius: 0;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	padding-left: 0;
+	padding-right: 0;
+	color: #000;
+	font-family: Verdana,"sans-serif";
+	font-feature-settings: normal;
+	font-kerning: auto;
+	font-language-override: normal;
+	font-size: 13px;
+	font-size-adjust: none;
+	font-stretch: normal;
+	font-style: normal;
+	font-synthesis: weight style;
+	font-variant: normal;
+	font-variant-alternates: normal;
+	font-variant-caps: normal;
+	font-variant-east-asian: normal;
+	font-variant-ligatures: normal;
+	font-variant-numeric: normal;
+	font-variant-position: normal;
+	font-weight: 400;
+
+}
+
+#CMangaFlag {
+	visibility: hidden;
+	width: 24px;
+	height: 24px;
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+.subscribed #CMangaFlag {
+	visibility: visible;
+}
+
+#CMangaView {
+	width: 24px;
+	height: 24px;
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+#CMangaView > img {
+	display: none;
+}
+
+#CMangaView.Single > .Single {
+	 display: initial;
+}
+
+#CMangaView.Double > .Double {
+	display: initial;
+}
+
+/*#CMangaView.Single {
+	background-image: url('img/single-24.png');
+}
+
+#CMangaView.Double {
+	background-image: url('img/dual-24.png');
+}*/
