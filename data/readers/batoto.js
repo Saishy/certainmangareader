@@ -25,7 +25,7 @@ CMREADER.StripImageFromDOM = function StripImageFromDOM(DOMData) {
 
 CMREADER.LoadImageAtPage = function LoadImageAtPage(pageNumber) {
 	var request = new XMLHttpRequest;
-	var pageUrl = CMREADER.options.pureURL + "/" + (parseInt(pageNumber) + 1);
+	var pageUrl = CMREADER.options.chapterURL + "/" + (parseInt(pageNumber) + 1);
 	//pageUrl = pageUrl.replace("http://", "");
 	//pageUrl = pageUrl.replace("bato.to", "");
 
@@ -74,50 +74,6 @@ CMREADER.LoadImageAtPage = function LoadImageAtPage(pageNumber) {
 	request.send(null);
 };
 
-CMREADER.LoadAllImages = function LoadAllImages() {
-	if (!CMREADER.options.templateImageURL) {
-		CMREADER.options.getRequests = [];
-
-		for(var x = 1; x < CMREADER.options.numberOfPages; x++) {
-			CMREADER.options.getRequests.push(x);
-		}
-
-		CMREADER.LoadImageAtPage(0);
-
-		return;
-	}
-
-	/*if (CMREADER.options.templateImageURL == undefined) {
-		CMREADER.options.getRequests = [];
-
-		for(var x = 1; x < CMREADER.options.numberOfPages; x++) {
-			CMREADER.options.getRequests.push(x);
-		}
-
-		CMREADER.LoadImageAtPage(0);
-
-		return;
-	}
-
-	CMREADER.options.pageImages = new Array(CMREADER.options.numberOfPages);
-
-	//First we try to get all images by way of url guessing
-	var count = CMREADER.options.numberOfPages;
-	var str, number;
-
-	for(var i = 0; i < count; i++) {
-		number = "000000" + (i + 1);
-		number = number.substr(number.length - 6);
-		str = "img" + number + ".png";
-		CMREADER.options.pageImages[i] = new Image();
-		CMREADER.options.pageImages[i].pageNumber = i;
-		CMREADER.options.pageImages[i].onload = CMREADER.PageLoadEvent;
-		CMREADER.options.pageImages[i].onerror = CMREADER.PageErrorEvent;
-
-		CMREADER.options.pageImages[i].src = CMREADER.options.templateImageURL + str;
-	}*/
-};
-
 CMREADER.PrepareLayout = function PrepareLayout() {
 	var wrapper = document.getElementById("comic_wrap");
 	var newDiv, newImg;
@@ -151,23 +107,6 @@ CMREADER.PrepareLayout = function PrepareLayout() {
 
 	wrapper.appendChild(document.getElementById("footer_utilities"));
 };
-
-/*CMREADER.GetTemplateImageURL = function GetTemplateImageURL() {
-	CMREADER.options.templateImageURL = false;
-
-	var count = document.images.length;
-	var re = /(.+img\.bato\.to\/comics\/.+\/)img/i;
-	var m;
-
-	while(count--) {
-		m = re.exec(document.images[count].src);
-		if (m && m[1]) {
-			CMREADER.options.templateImageURL = m[1];
-
-			return;
-		}
-	}
-};*/
 
 CMREADER.GetMangaCover = function GetMangaCover() {
 	var re = /bato\.to(.*comic\/_\/comics\/.*)/i;
@@ -264,7 +203,7 @@ CMREADER.GetNumberOfPages = function GetNumberOfPages() {
 		return;
 	}
 
-	window.location.assign(CMREADER.options.pureURL + "?supress_webtoon=t");
+	window.location.assign(CMREADER.options.chapterURL + "?supress_webtoon=t");
 };
 
 CMREADER.GetMangaName = function GetMangaName() {
@@ -276,9 +215,9 @@ CMREADER.GetMangaName = function GetMangaName() {
 	}
 };
 
-CMREADER.GetPureURL = function GetPureURL() {
-	CMREADER.options.pureURL = window.content.location.href.replace(/(\/\d+$|\?.*)/, '');
-	CMREADER.options.pureURL = CMREADER.options.pureURL.replace(/(\/\d*$)/, '');
+CMREADER.GetChapterURL = function GetChapterURL() {
+	CMREADER.options.chapterURL = window.content.location.href.replace(/(\/\d+$|\?.*)/, '');
+	CMREADER.options.chapterURL = CMREADER.options.chapterURL.replace(/(\/\d*$)/, '');
 };
 
 self.port.on("StartMain", CMREADER.Main);

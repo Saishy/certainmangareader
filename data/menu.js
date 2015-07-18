@@ -16,7 +16,7 @@ CMMENU.SetChapterList = function SetChapterList(chapterList, currentChapter) {
 		}
 
 		opt.value = chapterList[count];
-		opt.text = "Ch " + chapterList[count];
+		opt.text = /*"Ch " +*/ chapterList[count];
 
 		selectBox.add(opt, null);
 	}
@@ -262,7 +262,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 
 	newImg = document.createElement('img');
 	newImg.src = self.options.flag;
-	newImg.setAttribute("title", "Mark currently chapter as lastest read");
+	newImg.setAttribute("title", "Mark current chapter as latest read");
 	newDiv.appendChild(newImg);
 
 	CMMENU.topMenu.appendChild(newDiv);

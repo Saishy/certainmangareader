@@ -8,16 +8,28 @@ CMREADER.StripImageFromDOM = false;
 
 CMREADER.LoadImageAtPage = false;
 
-CMREADER.LoadAllImages = false;
+CMREADER.LoadAllImages = function LoadAllImages() {
+	CMREADER.SetChapterButtons();
 
-CMREADER.PageLoadEvent = function PageLoadEvent() {
+	CMREADER.options.getRequests = [];
+
+	for(var x = 1; x < CMREADER.options.numberOfPages; x++) {
+		CMREADER.options.getRequests.push(x);
+	}
+
+	CMREADER.LoadImageAtPage(0);
+
+	return;
+};
+
+/*CMREADER.PageLoadEvent = function PageLoadEvent() {
 	if (this.pageNumber !== undefined && this.pageNumber !== null) {
 		CMREADER.options.pageSources[this.pageNumber] = this.src;
 		CMREADER.PageLoaded(this.pageNumber);
 	}
 };
 
-CMREADER.PageErrorEvent = function PageLoadEvent() {
+CMREADER.PageErrorEvent = function PageErrorEvent() {
 	if (this.bTriedJPG) {
 		if (!CMREADER.options.getRequests || CMREADER.options.getRequests.length == 0) {
 			CMREADER.options.getRequests = [];
@@ -29,7 +41,7 @@ CMREADER.PageErrorEvent = function PageLoadEvent() {
 		this.bTriedJPG = true;
 		CMREADER.options.pageImages[this.pageNumber].src = CMREADER.options.pageImages[this.pageNumber].src.replace(".png", ".jpg");
 	}
-};
+};*/
 
 CMREADER.LoadComplete = function LoadComplete() {
 	CMREADER.options.bLoadComplete = true;
@@ -44,6 +56,7 @@ CMREADER.PageLoaded = function PageLoaded(pageNumber) {
 	while(count--) {
 		if (pageNumber == CMREADER.options.getRequests[count]) {
 			CMREADER.options.getRequests.splice(count, 1);
+			break;
 		}
 	}
 
@@ -69,7 +82,7 @@ CMREADER.AddToList = function AddToList() {
 		atChapter: CMREADER.options.chapterName,
 		chapters: CMREADER.options.chapters,
 		//chapters: [{"name": CMREADER.options.chapters[0].name, "url": CMREADER.options.chapters[0].url}],
-		//currentURL: CMREADER.options.pureURL,
+		//currentURL: CMREADER.options.chapterURL,
 		bRead: (CMREADER.options.chapterName == CMREADER.options.chapterNames[CMREADER.options.chapterNames.length - 1]),
 		//bRead: true,
 		lastUpdatedAt: Date.now()
@@ -135,7 +148,7 @@ CMREADER.GoToChapter = function GoToChapter(number) {
 		return;
 	}
 
-	var dest = CMREADER.options.pureURL;
+	var dest = CMREADER.options.chapterURL;
 	var count;
 
 	if (number == "back" || number == "next") {
@@ -166,7 +179,7 @@ CMREADER.GoToChapter = function GoToChapter(number) {
 		}
 	}
 
-	if (dest != CMREADER.options.pureURL) {
+	if (dest != CMREADER.options.chapterURL) {
 		window.location.assign(dest);
 	}
 };
@@ -410,16 +423,18 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 	var previousChapterDiv = document.createElement('a');
 	previousChapterDiv.id = "CMRPreviousChapter";
 	previousChapterDiv.textContent = "Previous Chapter";
-	previousChapterDiv.onclick = function() {
+	previousChapterDiv.style.visibility = 'hidden';
+	/*previousChapterDiv.onclick = function() {
 		CMREADER.GoToChapter("back");
-	};
+	};*/
 
 	var nextChapterDiv = document.createElement('a');
 	nextChapterDiv.id = "CMRNextChapter";
 	nextChapterDiv.textContent = "Next Chapter";
-	nextChapterDiv.onclick = function() {
+	nextChapterDiv.style.visibility = 'hidden';
+	/*nextChapterDiv.onclick = function() {
 		CMREADER.GoToChapter("next");
-	};
+	};*/
 
 	chapterButtonsDiv.appendChild(previousChapterDiv);
 	chapterButtonsDiv.appendChild(nextChapterDiv);
@@ -437,23 +452,39 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 
 CMREADER.PrepareLayout = false;
 
-CMREADER.GetTemplateImageURL = function GetTemplateImageURL() {
-	CMREADER.options.templateImageURL = false;
-};
-
 CMREADER.GetMangaCover = false;
 
 CMREADER.GetListOfChapters = false;
+
+CMREADER.SetChapterButtons = function SetChapterButtons() {
+	if (CMREADER.options.chapters.length > 1) {
+		for (var i = 0; i < CMREADER.options.chapters.length; i++) {
+			if (CMREADER.options.chapterName == CMREADER.options.chapters[i].name) {
+				break;
+			}
+		}
+
+		if (i < CMREADER.options.chapters.length - 1) {
+			var nextChapterTag = document.getElementById('CMRNextChapter');
+			nextChapterTag.style.visibility = 'visible';
+			nextChapterTag.setAttribute("href", CMREADER.options.chapters[i+1].url);
+		}
+		if (i > 0) {
+			var previousChapterTag = document.getElementById('CMRPreviousChapter');
+			previousChapterTag.style.visibility = 'visible';
+			previousChapterTag.setAttribute("href", CMREADER.options.chapters[i-1].url);
+		}
+	}
+};
 
 CMREADER.GetNumberOfPages = false;
 
 CMREADER.GetMangaName = false;
 
-CMREADER.GetPureURL = false;
+CMREADER.GetChapterURL = false;
 
 CMREADER.InitOptions = function InitOptions() {
-	CMREADER.GetPureURL();
-	CMREADER.GetTemplateImageURL();
+	CMREADER.GetChapterURL();
 	CMREADER.GetMangaCover();
 	CMREADER.GetNumberOfPages();
 	CMREADER.GetMangaName();

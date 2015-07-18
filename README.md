@@ -18,3 +18,4 @@
 - Add mangareader support.
 - Add mangahere support.
 - Add mangacow support.
+- Add readmanga.today support.

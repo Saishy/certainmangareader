@@ -2,7 +2,7 @@ if (typeof CMREADER == 'undefined' || CMREADER == null) {
 	CMREADER = {};
 	CMREADER.options = {};
 }
-CMREADER.options.siteName = "Mangafox";
+CMREADER.options.siteName = "Mangahere";
 
 CMREADER.StripSecondImageFromDOM = function StripSecondImageFromDOM(DOMData) {
 	if (!DOMData) {
@@ -76,31 +76,7 @@ CMREADER.LoadImageAtPage = function LoadImageAtPage(pageNumber) {
 
 					//console.log("NEXT: " + next);
 					CMREADER.LoadImageAtPage(next);
-				}/* else {
-					var re = /(.*)(\d\d)\S*?(\.jpg|\.png)/i;
-					var m;
-
-					if (secondImageSrc !== false) {
-						m = re.exec(secondImageSrc);
-						var newCounter = parseInt(m[2]);
-						if (m[2] == newCounter) {
-							//CMREADER.options.currentLoadingPageNumberIncrease = newCounter - (pageNumber + 1);
-							//CMREADER.options.currentLoadingPage = pageNumber + 2;
-							CMREADER.LoadAllImages();
-						} else {
-							m = re.exec(CMREADER.options.pageSources[pageNumber]);
-							if (m[2] == newCounter) {
-								//CMREADER.options.currentLoadingPageNumberIncrease = newCounter - pageNumber;
-								//CMREADER.options.currentLoadingPage = pageNumber + 1;
-								CMREADER.LoadAllImages();
-							}
-						}
-					} else {
-						if (pageNumber < CMREADER.options.pages.length - 1) {
-							CMREADER.LoadImageAtPage(pageNumber++);
-						}
-					}
-				}*/
+				}
 			}
 		}
 	};
@@ -142,40 +118,9 @@ CMREADER.GetSID = function GetSID() {
 };
 
 CMREADER.GetMangaCover = function GetMangaCover() {
-	CMREADER.GetSID();
-	CMREADER.options.mangaCoverSRC = 'http://l.mfcdn.net/store/manga/' + CMREADER.options.sid + '/cover.jpg';
+	CMREADER.GetSID(); //http://a.mhcdn.net/store/manga/9816/cover.jpg
+	CMREADER.options.mangaCoverSRC = 'http://a.mhcdn.net/store/manga/' + CMREADER.options.sid + '/cover.jpg';
 };
-
-/*CMREADER.PageLoadEvent = function PageLoadEvent() {
-	if (this.pageNumber !== undefined && this.pageNumber !== null) {
-		if (this.width <= 1 || this.height <= 1) {
-			this.onerror();
-			return;
-		}
-		CMREADER.options.pageSources[this.pageNumber] = this.src;
-		CMREADER.PageLoaded(this.pageNumber);
-
-		//CMREADER.options.currentLoadingPage = this.pageNumber + 1;
-		CMREADER.LoadAllImages();
-	}
-};
-
-CMREADER.PageErrorEvent = function PageErrorEvent() {
-	if (!this.bServerL) {
-		this.bServerL = true;
-		CMREADER.options.pageImages[this.pageNumber].src = CMREADER.options.pageImages[this.pageNumber].src.replace("z.mfcdn.net", "l.mfcdn.net");
-	} else if (!this.bServerA) {
-		this.bServerA = true;
-		CMREADER.options.pageImages[this.pageNumber].src = CMREADER.options.pageImages[this.pageNumber].src.replace("l.mfcdn.net", "a.mfcdn.net");
-	} else {
-		if (!CMREADER.options.getRequests || CMREADER.options.getRequests.length == 0) {
-			CMREADER.options.getRequests = [];
-			CMREADER.LoadImageAtPage(this.pageNumber);
-		} else {
-			CMREADER.options.getRequests.push(this.pageNumber);
-		}
-	}
-};*/
 
 CMREADER.PageLoaded = function PageLoaded(pageNumber) {
 	var count = CMREADER.options.getRequests.length;
@@ -188,9 +133,9 @@ CMREADER.PageLoaded = function PageLoaded(pageNumber) {
 
 	CMREADER.options.pages[pageNumber].img.onerror = function() {
 		this.onerror = function() {
-			this.src = this.src.replace("a.mfcdn.net", "l.mfcdn.net");
+			this.src = this.src.replace("a.mhcdn.net", "l.mhcdn.net");
 		};
-		this.src = this.src.replace("z.mfcdn.net", "a.mfcdn.net");
+		this.src = this.src.replace("z.mhcdn.net", "a.mhcdn.net");
 	};
 	CMREADER.options.pages[pageNumber].img.src = CMREADER.options.pageSources[pageNumber];
 
@@ -243,11 +188,12 @@ CMREADER.PrepareLayout = function PrepareLayout() {
 		wrapper.removeAttribute('style');
 	}
 
-	var ads = document.getElementById("ad_top");
-	if (ads) {
-		ads.remove();
+	var ads = document.getElementsByClassName("clearfix mb10");
+	var count = ads.length;
+	while(count--) {
+		ads[count].remove();
 	}
-	ads = document.getElementsByClassName("ad");
+	ads = document.getElementsByClassName("advimg72890");
 	var count = ads.length;
 	while(count--) {
 		ads[count].remove();
@@ -267,7 +213,7 @@ CMREADER.GetListOfChapters = function GetListOfChapters() {
 		}
 	}
 
-	var re = /(.*mangafox.me\/manga\/.*?)\//i;
+	var re = /(.*mangahere.co\/manga\/.*?)\//i;
 	CMREADER.options.mangaURL = re.exec(CMREADER.options.chapterURL)[1];
 	CMREADER.options.chapters = new Array();
 	CMREADER.options.chapterNames = new Array();
@@ -277,7 +223,7 @@ CMREADER.GetListOfChapters = function GetListOfChapters() {
 		mutations.forEach(function(mutation) {
 			CMREADER.options.chapters.push({
 				name: mutation.addedNodes[0].textContent.trim(),
-				url: CMREADER.options.mangaURL + '/' + mutation.addedNodes[0].value + '/1.html'
+				url: mutation.addedNodes[0].value
 			});
 			CMREADER.options.chapterNames.push(mutation.addedNodes[0].textContent.trim());
 			//console.log(mutation.type);
@@ -299,17 +245,18 @@ CMREADER.GetListOfChapters = function GetListOfChapters() {
 };
 
 CMREADER.GetNumberOfPages = function GetNumberOfPages() {
-	var pageSelect = document.querySelector("select.m");
+	var pageSelect = document.querySelector("select.wid60");
 	var bComments = false;
-	var options = pageSelect.options;
-	var count = options.length;
-	while(count--) {
-		if (options[count].value == 0) {
-			bComments = true;
-		}
-	}
 
 	if (pageSelect) {
+		var options = pageSelect.options;
+		var count = options.length;
+		while(count--) {
+			if (options[count].value == 0) {
+				bComments = true;
+			}
+		}
+
 		if (bComments) {
 			CMREADER.options.numberOfPages = pageSelect.length - 1;
 		} else {
@@ -319,11 +266,10 @@ CMREADER.GetNumberOfPages = function GetNumberOfPages() {
 };
 
 CMREADER.GetMangaName = function GetMangaName() {
-	var re = /(.*)\s\d+?/;
-	var name = re.exec(document.querySelector("h1.no").textContent);
+	var name = document.querySelector("h2>a");
 
-	if (name && name[1]) {
-		CMREADER.options.mangaName = name[1];
+	if (name) {
+		CMREADER.options.mangaName = name.textContent.replace(" Manga", '');
 	}
 };
 
@@ -331,8 +277,13 @@ CMREADER.GetChapterURL = function GetChapterURL() {
 	var re = /(\/\d*\..*)$/;
 	var m = re.exec(window.content.location.href);
 	if (!m || !m[0]) {
-		window.location.assign('1.html');
-		//throw new Error("Reloading the page...");
+		re = /manga\/.*?\/(.*?)\//i;
+		m = re.exec(window.content.location.href);
+		if (m && m[1]) {
+			CMREADER.options.chapterURL = window.content.location.href;
+		} else {
+			throw new Error("Invalid href.");
+		}
 	} else {
 		CMREADER.options.chapterURL = window.content.location.href.replace(re, '');
 	}
@@ -365,8 +316,8 @@ CMREADER.Main = function Main() {
 		CMREADER.InitOptions();
 		CMREADER.PrepareLayout();
 	} catch(e) {
-		//console.log(e.name);
-		//console.log(e.message);
+		console.log(e.name);
+		console.log(e.message);
 	}
 };
 
