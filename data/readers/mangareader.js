@@ -93,11 +93,39 @@ CMREADER.LoadImageAtPage = function LoadImageAtPage(pageNumber) {
 	request.send(null);
 };
 
+CMREADER.AddToList = function AddToList() {
+	var mangaData = {
+		name: CMREADER.options.mangaName,
+		site: CMREADER.options.siteName,
+		sid: CMREADER.options.sid,
+		mangaURL: CMREADER.options.mangaURL,
+		coverSrc: CMREADER.options.mangaCoverSRC,
+		atChapter: CMREADER.options.chapterName,
+		chapters: CMREADER.options.chapters,
+		//chapters: [{"name": CMREADER.options.chapters[0].name, "url": CMREADER.options.chapters[0].url}],
+		//currentURL: CMREADER.options.chapterURL,
+		bRead: (CMREADER.options.chapterName == CMREADER.options.chapterNames[CMREADER.options.chapterNames.length - 1]),
+		lastUpdatedAt: Date.now()
+	};
+
+	self.port.emit("AddToList", mangaData);
+};
+
+CMREADER.UpdateMangaInfo = function UpdateMangaInfo() {
+	var mangaData = {
+		name: CMREADER.options.mangaName,
+		site: CMREADER.options.siteName,
+		sid: CMREADER.options.sid,
+		chapters: CMREADER.options.chapters,
+		lastUpdatedAt: Date.now()
+	};
+
+	self.port.emit("UpdateMangaInfo", mangaData);
+};
+
 CMREADER.PrepareLayout = function PrepareLayout() {
 	var wrapper = document.getElementsByClassName("episode-table");
 	var blankDiv = document.createElement('div');
-
-	console.log("1");
 
 	if (wrapper && wrapper.length > 0) {
 		wrapper = wrapper[0];
@@ -105,41 +133,37 @@ CMREADER.PrepareLayout = function PrepareLayout() {
 		wrapper = false;
 	}
 
-	console.log("2");
-
 	if (wrapper) {
 		wrapper.parentNode.replaceChild(blankDiv, wrapper);
 	}
-
-	console.log("3");
 
 	var ads = document.getElementById("adtop");
 	if (ads) {
 		ads.remove();
 	}
 
-	console.log("4");
-
 	ads = document.getElementById("adfooter");
 	if (ads) {
 		ads.remove();
 	}
-
-	console.log("5");
 
 	var myScript = document.createElement("script");
 	myScript.type = "text/javascript";
 	myScript.text = "document.onkeydown = undefined;";
 	document.body.appendChild(myScript);
 
-	console.log("6");
-
 	CMREADER.PrepareLayoutPages(blankDiv);
+};
 
-	console.log("7");
+CMREADER.GetSID = function GetSID() {
+	CMREADER.options.sid = parseInt(unsafeWindow.document.mangaid);
+
+	console.log(CMREADER.options.sid);
 };
 
 CMREADER.GetMangaCover = function GetMangaCover() {
+	CMREADER.GetSID();
+
 	var link = document.querySelector('h2.c2>a');
 
 	if (!link) {

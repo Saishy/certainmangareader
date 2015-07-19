@@ -76,7 +76,7 @@ CMREADER.LoadImageAtPage = function LoadImageAtPage(pageNumber) {
 
 CMREADER.PrepareLayout = function PrepareLayout() {
 	var wrapper = document.getElementById("comic_wrap");
-	var newDiv, newImg;
+	var newDiv;
 
 	if (wrapper) {
 		//Try to keep the ads in respect to the scanlators

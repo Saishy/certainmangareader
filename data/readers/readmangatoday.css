@@ -1,0 +1,19 @@
+body {
+	min-height: auto !important;
+}
+
+#CMangaTopMenu {
+	box-sizing: initial !important;
+}
+
+.footer {
+	display: none;
+}
+
+.footer+.footer {
+	display: block;
+}
+
+.IL_BASE {
+	display: none;
+}
