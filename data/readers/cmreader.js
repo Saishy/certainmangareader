@@ -506,8 +506,8 @@ CMREADER.Main = function Main() {
 			CMREADER.CheckSubscription();
 		}
 	} catch(e) {
-		console.log(e.name);
-		console.log(e.message);
+		//console.log(e.name);
+		//console.log(e.message);
 	}
 };
 

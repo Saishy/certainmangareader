@@ -316,8 +316,8 @@ CMREADER.Main = function Main() {
 		CMREADER.InitOptions();
 		CMREADER.PrepareLayout();
 	} catch(e) {
-		console.log(e.name);
-		console.log(e.message);
+		//console.log(e.name);
+		//console.log(e.message);
 	}
 };
 

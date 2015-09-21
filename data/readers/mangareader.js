@@ -17,7 +17,7 @@ CMREADER.StripSecondImageFromDOM = function StripSecondImageFromDOM(DOMData) {
 	}
 
 	if (!imgsrc || imgsrc == '') {
-		console.log("fail");
+		//console.log("fail");
 		return false;
 	}
 
@@ -155,10 +155,26 @@ CMREADER.PrepareLayout = function PrepareLayout() {
 	CMREADER.PrepareLayoutPages(blankDiv);
 };
 
-CMREADER.GetSID = function GetSID() {
-	CMREADER.options.sid = parseInt(unsafeWindow.document.mangaid);
+window.addEventListener('message', function(event) {
+	//console.log("Event origin: " + event.origin);
 
-	console.log(CMREADER.options.sid);
+	if (event.origin != "http://www.mangareader.net") {
+		return;
+	}
+	CMREADER.options.sid = parseInt(event.data);
+
+	//console.log(CMREADER.options.sid);
+}, false);
+
+CMREADER.GetSID = function GetSID() {
+	//CMREADER.options.sid = parseInt(unsafeWindow.document.mangaid);
+
+	var myScript = document.createElement("script");
+	myScript.type = "text/javascript";
+	myScript.text = "window.postMessage(document.mangaid, 'http://www.mangareader.net');";
+	document.body.appendChild(myScript);
+
+	//console.log(CMREADER.options.sid);
 };
 
 CMREADER.GetMangaCover = function GetMangaCover() {
@@ -232,7 +248,7 @@ CMREADER.FinishedChapterList = function FinishedChapterList() {
 	var listOfChapterNames = new Array();
 	var chN;
 
-	console.log("Reading chapters list");
+	//console.log("Reading chapters list");
 
 	for (var i = 0; i < count; i++) {
 		chN = {
@@ -244,7 +260,7 @@ CMREADER.FinishedChapterList = function FinishedChapterList() {
 		listOfChapterNames.push(chN.name);
 	}
 
-	console.log("Finished reading chapters list");
+	//console.log("Finished reading chapters list");
 
 	CMREADER.options.chapters = listOfChapters;
 	CMREADER.options.chapterNames = listOfChapterNames;
@@ -282,11 +298,11 @@ CMREADER.GetNumberOfPages = function GetNumberOfPages() {
 CMREADER.GetMangaName = function GetMangaName() {
 	var link = document.querySelector('h2.c2>a');
 
-	console.log("Link is: " + link);
+	//console.log("Link is: " + link);
 
 	var name = link.textContent.replace(" Manga", '');
 
-	console.log("Zelda is: " + link);
+	//console.log("Zelda is: " + link);
 
 	CMREADER.options.mangaName = name;
 };
@@ -308,8 +324,8 @@ CMREADER.Main = function Main() {
 		CMREADER.InitOptions();
 		CMREADER.PrepareLayout();
 	} catch(e) {
-		console.log(e.name);
-		console.log(e.message);
+		//console.log(e.name);
+		//console.log(e.message);
 	}
 };
 

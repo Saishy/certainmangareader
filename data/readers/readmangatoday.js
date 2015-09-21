@@ -27,7 +27,7 @@ CMREADER.LoadImageAtPage = function LoadImageAtPage(pageNumber) {
 
 	if (CMREADER.options.pageSources[pageNumber]) {
 		CMREADER.PageLoaded(pageNumber);
-		console.log("Pomf: " + pageNumber + " twist: " + CMREADER.options.pageSources[pageNumber]);
+		//console.log("Pomf: " + pageNumber + " twist: " + CMREADER.options.pageSources[pageNumber]);
 		if (CMREADER.options.getRequests && CMREADER.options.getRequests.length > 0) {
 			var next = CMREADER.options.getRequests[0];
 			CMREADER.options.getRequests.splice(0, 1);
@@ -242,7 +242,7 @@ CMREADER.GetNumberOfPages = function GetNumberOfPages() {
 };
 
 CMREADER.GetMangaName = function GetMangaName() {
-	var re = /(^.*?)\s\d*?\s\-\sRead/;
+	var re = /(^.*?)\s\d*?\.*?\d*?\s\-\sRead/;
 	var name = re.exec(document.title);
 
 	if (name) {
