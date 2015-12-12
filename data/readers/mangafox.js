@@ -260,8 +260,11 @@ CMREADER.AddToList = function AddToList() {
 		coverSrc: CMREADER.options.mangaCoverSRC,
 		atChapter: CMREADER.options.chapterName,
 		chapters: CMREADER.options.chapters,
+<<<<<<< master
 		//chapters: [{"name": CMREADER.options.chapters[0].name, "url": CMREADER.options.chapters[0].url}],
 		//currentURL: CMREADER.options.pureURL,
+=======
+>>>>>>> local
 		bRead: (CMREADER.options.chapterName == CMREADER.options.chapterNames[CMREADER.options.chapterNames.length - 1]),
 		lastUpdatedAt: Date.now()
 	};
