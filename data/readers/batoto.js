@@ -26,11 +26,7 @@ CMREADER.StripImageFromDOM = function StripImageFromDOM(DOMData) {
 
 CMREADER.LoadImageAtPage = function LoadImageAtPage(pageNumber) {
 	var request = new XMLHttpRequest;
-<<<<<<< master
-	var pageUrl = CMREADER.options.pureURL + "/" + (parseInt(pageNumber) + 1);
-=======
 	var pageUrl = "/areader?id=" + CMREADER.options.cid + "&p=" + (parseInt(pageNumber) + 1);
->>>>>>> local
 	//pageUrl = pageUrl.replace("http://", "");
 	//pageUrl = pageUrl.replace("bato.to", "");
 
@@ -157,24 +153,7 @@ CMREADER.PrepareLayout = function PrepareLayout() {
 	wrapper.appendChild(document.getElementById("footer_utilities"));
 };
 
-<<<<<<< master
-/*CMREADER.GetTemplateImageURL = function GetTemplateImageURL() {
-	CMREADER.options.templateImageURL = false;
 
-	var count = document.images.length;
-	var re = /(.+img\.bato\.to\/comics\/.+\/)img/i;
-	var m;
-
-	while(count--) {
-		m = re.exec(document.images[count].src);
-		if (m && m[1]) {
-			CMREADER.options.templateImageURL = m[1];
-
-			return;
-		}
-	}
-};*/
-=======
 /** Get Chapter ID */
 CMREADER.GetCID = function GetCID() {
 	if (window.location.hash.length <= 1) {
@@ -188,7 +167,6 @@ CMREADER.GetCID = function GetCID() {
 
 	CMREADER.options.cid = hashL[0];
 };
->>>>>>> local
 
 CMREADER.GetMangaCover = function GetMangaCover() {
 	var re = /bato\.to(.*comic\/_\/comics\/.*)/i;
@@ -338,12 +316,7 @@ CMREADER.GetNumberOfPages = function GetNumberOfPages() {
 		CMREADER.options.numberOfPages = pageSelect.length;
 		return;
 	}
-
-<<<<<<< master
-	window.location.assign(CMREADER.options.pureURL + "?supress_webtoon=t");
-=======
 	//window.location.assign(CMREADER.options.chapterURL + "?supress_webtoon=t");
->>>>>>> local
 };
 
 CMREADER.GetMangaName = function GetMangaName() {
@@ -355,11 +328,6 @@ CMREADER.GetMangaName = function GetMangaName() {
 	}
 };
 
-<<<<<<< master
-CMREADER.GetPureURL = function GetPureURL() {
-	CMREADER.options.pureURL = window.content.location.href.replace(/(\/\d+$|\?.*)/, '');
-	CMREADER.options.pureURL = CMREADER.options.pureURL.replace(/(\/\d*$)/, '');
-=======
 CMREADER.GetChapterURL = function GetChapterURL() {
 	CMREADER.options.chapterURL = window.content.location.href.replace(/(\?.*)/, '');
 	//CMREADER.options.chapterURL = window.content.location.href.replace(/(\/\d+$|\?.*)/, '');
@@ -379,7 +347,6 @@ CMREADER.Main = function Main() {
 		//console.log(e.name);
 		//console.log(e.message);
 	}
->>>>>>> local
 };
 
 self.port.on("StartMain", CMREADER.Main);
