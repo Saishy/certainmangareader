@@ -24,7 +24,7 @@ CMREADER.StripImageFromDOM = function StripImageFromDOM(DOMData) {
 
 CMREADER.LoadImageAtPage = function LoadImageAtPage(pageNumber) {
 	var request = new XMLHttpRequest;
-	var pageUrl = CMREADER.options.pureURL + "/" + (parseInt(pageNumber) + 1);
+	var pageUrl = CMREADER.options.chapterURL + "/" + (parseInt(pageNumber) + 1);
 	//pageUrl = pageUrl.replace("http://", "");
 	//pageUrl = pageUrl.replace("readms.com", "");
 
@@ -71,20 +71,6 @@ CMREADER.LoadImageAtPage = function LoadImageAtPage(pageNumber) {
 	};
 
 	request.send(null);
-};
-
-CMREADER.LoadAllImages = function LoadAllImages() {
-	if (!CMREADER.options.templateImageURL) {
-		CMREADER.options.getRequests = [];
-
-		for(var x = 1; x < CMREADER.options.numberOfPages; x++) {
-			CMREADER.options.getRequests.push(x);
-		}
-
-		CMREADER.LoadImageAtPage(0);
-
-		return;
-	}
 };
 
 CMREADER.PrepareLayout = function PrepareLayout() {
@@ -191,9 +177,9 @@ CMREADER.GetMangaName = function GetMangaName() {
 	}
 };
 
-CMREADER.GetPureURL = function GetPureURL() {
-	CMREADER.options.pureURL = window.content.location.href.replace(/(\?.*)/, '');
-	CMREADER.options.pureURL = CMREADER.options.pureURL.replace(/(\/\d*$)/, '');
+CMREADER.GetChapterURL = function GetChapterURL() {
+	CMREADER.options.chapterURL = window.content.location.href.replace(/(\?.*)/, '');
+	CMREADER.options.chapterURL = CMREADER.options.chapterURL.replace(/(\/\d*$)/, '');
 };
 
 CMREADER.FinishedChapterList = function FinishedChapterList(domData) {

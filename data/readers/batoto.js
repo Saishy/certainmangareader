@@ -75,53 +75,9 @@ CMREADER.LoadImageAtPage = function LoadImageAtPage(pageNumber) {
 	request.send(null);
 };
 
-CMREADER.LoadAllImages = function LoadAllImages() {
-	if (!CMREADER.options.templateImageURL) {
-		CMREADER.options.getRequests = [];
-
-		for(var x = 1; x < CMREADER.options.numberOfPages; x++) {
-			CMREADER.options.getRequests.push(x);
-		}
-
-		CMREADER.LoadImageAtPage(0);
-
-		return;
-	}
-
-	/*if (CMREADER.options.templateImageURL == undefined) {
-		CMREADER.options.getRequests = [];
-
-		for(var x = 1; x < CMREADER.options.numberOfPages; x++) {
-			CMREADER.options.getRequests.push(x);
-		}
-
-		CMREADER.LoadImageAtPage(0);
-
-		return;
-	}
-
-	CMREADER.options.pageImages = new Array(CMREADER.options.numberOfPages);
-
-	//First we try to get all images by way of url guessing
-	var count = CMREADER.options.numberOfPages;
-	var str, number;
-
-	for(var i = 0; i < count; i++) {
-		number = "000000" + (i + 1);
-		number = number.substr(number.length - 6);
-		str = "img" + number + ".png";
-		CMREADER.options.pageImages[i] = new Image();
-		CMREADER.options.pageImages[i].pageNumber = i;
-		CMREADER.options.pageImages[i].onload = CMREADER.PageLoadEvent;
-		CMREADER.options.pageImages[i].onerror = CMREADER.PageErrorEvent;
-
-		CMREADER.options.pageImages[i].src = CMREADER.options.templateImageURL + str;
-	}*/
-};
-
 CMREADER.PrepareLayout = function PrepareLayout() {
 	var wrapper = document.getElementById("comic_wrap");
-	var newDiv, newImg;
+	var newDiv;
 
 	if (wrapper) {
 		//Try to keep the ads in respect to the scanlators
@@ -152,7 +108,6 @@ CMREADER.PrepareLayout = function PrepareLayout() {
 
 	wrapper.appendChild(document.getElementById("footer_utilities"));
 };
-
 
 /** Get Chapter ID */
 CMREADER.GetCID = function GetCID() {
@@ -316,6 +271,7 @@ CMREADER.GetNumberOfPages = function GetNumberOfPages() {
 		CMREADER.options.numberOfPages = pageSelect.length;
 		return;
 	}
+
 	//window.location.assign(CMREADER.options.chapterURL + "?supress_webtoon=t");
 };
 
