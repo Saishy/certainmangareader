@@ -343,6 +343,8 @@ CMREADER.SetActivePage = function SetActivePage(pageNumber) {
 };
 
 CMREADER.ChangeInfiniteScrolling = function ChangeInfiniteScrolling(bInfinite) {
+	CMREADER.options.bInfiniteScrolling = bInfinite;
+
 	if (!CMREADER.options.wrapper) {
 		return;
 	}
@@ -355,13 +357,15 @@ CMREADER.ChangeInfiniteScrolling = function ChangeInfiniteScrolling(bInfinite) {
 };
 
 CMREADER.ChangeShowPageNumber = function ChangeShowPageNumber(bShow) {
+	CMREADER.options.bShowPageNumbers = bShow;
+
 	if (!CMREADER.options.wrapper) {
 		return;
 	}
 	if (bShow) {
-		CMREADER.options.wrapper.classList.remove("pageMarkerDisabled");
+		CMREADER.options.wrapper.classList.remove("CMangaPageMarkerDisabled");
 	} else {
-		CMREADER.options.wrapper.classList.add("pageMarkerDisabled");
+		CMREADER.options.wrapper.classList.add("CMangaPageMarkerDisabled");
 	}
 };
 
@@ -369,12 +373,6 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 	CMREADER.options.wrapper = wrapper;
 
 	wrapper.classList.add("CMangaWrapper");
-
-	wrapper.classList.add("pageMarkerDisabled");
-
-	/*if (!self.options.bShowPageNumbers) {
-		wrapper.classList.add("pageMarkerDisabled");
-	}*/
 
 	var count = CMREADER.options.numberOfPages;
 	var newDiv, newImg, pageMarker, pageSet;
@@ -407,7 +405,7 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 		newDiv.appendChild(newImg);
 
 		pageMarker = document.createElement('div');
-		pageMarker.className = "pageMarker";
+		pageMarker.className = "CMangaPageMarker";
 		pageMarker.textContent = i + 1;
 		newDiv.appendChild(pageMarker);
 
@@ -415,6 +413,15 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 			div: newDiv,
 			img: newImg
 		};
+	}
+
+	if (!CMREADER.options.bShowPageNumbers) {
+		wrapper.classList.add("CMangaPageMarkerDisabled");
+	}
+
+	if (!CMREADER.options.bInfiniteScrolling) {
+		wrapper.classList.add("CMangaPagePerPage");
+		CMREADER.SetActivePage(0);
 	}
 
 	var chapterButtonsDiv = document.createElement('div');
