@@ -265,6 +265,60 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 	}
 };
 
+// SOFTWARE CHANGED SETTINGS ===========================================================================================
+
+
+CMMP.ReceiveAddonStatus = function ReceiveAddonStatus(status) {
+	document.getElementById("CMangaSwitch").checked = status;
+};
+
+CMMP.ReceiveNotificationStatus = function ReceiveNotificationStatus(status) {
+	document.getElementById("CMangaNotifications").checked = status;
+};
+
+CMMP.ReceiveNetSave = function ReceiveNetSave(status) {
+	document.getElementById("CMangaNetSave").checked = status;
+};
+
+CMMP.ReceiveDesign = function ReceiveDesign(status) {
+	document.getElementById("CMangaCompact").checked = status;
+
+	if (status) {
+		CMMP.options.mangaViewContainer.classList.remove("CMangaBigLayout");
+		CMMP.options.mangaViewContainer.classList.add("CMangaCompactLayout");
+	} else {
+		CMMP.options.mangaViewContainer.classList.remove("CMangaCompactLayout");
+		CMMP.options.mangaViewContainer.classList.add("CMangaBigLayout");
+		CMMP.UdapteLastUpdatedAt();
+	}
+};
+
+CMMP.ReceiveShowPageNumber = function ReceiveShowPageNumber(status) {
+	document.getElementById("CMangaPageCheck").checked = status;
+};
+
+CMMP.ReceiveInfiniteScrolling = function ReceiveInfiniteScrolling(status) {
+	document.getElementById("CMangaInfinite").checked = status;
+};
+
+CMMP.ReceiveUpdateTime = function ReceiveUpdateTime(status) {
+	document.getElementById("CMangaUpdateTime").value = status;
+
+	if (document.getElementById("CMangaMaxUpdateTime").value <= status) {
+		CMMP.ChangeUpdateTime();
+	}
+};
+
+CMMP.ReceiveMaxUpdateTime = function ReceiveMaxUpdateTime(status) {
+	document.getElementById("CMangaMaxUpdateTime").value = status;
+
+	if (document.getElementById("CMangaUpdateTime").value >= status) {
+		CMMP.ChangeUpdateTime();
+	}
+};
+
+// USER CHANGED SETTINGS ===============================================================================================
+
 CMMP.AddonOnOff = function AddonOnOff() {
 	var temp = document.getElementById("CMangaSwitch").checked;
 
@@ -349,7 +403,7 @@ CMMP.ChangeMaxUpdateTime = function ChangeMaxUpdateTime() {
 	self.port.emit("ChangeMaxUpdateTime", temp2.options[temp2.selectedIndex].value);
 };
 
-// End of Udapte age
+// INITIAL SETTINGS ====================================================================================================
 
 CMMP.AddEvents = function AddEvents(domElem) {
 	var container = document;
@@ -390,6 +444,7 @@ CMMP.AddEvents = function AddEvents(domElem) {
 };
 
 CMMP.PrepareLayout = function PrepareLayout(options) {
+	CMMP.options.updateButton = document.getElementById("CMangaUpdateNow");
 	CMMP.options.mangaViewContainer = document.getElementById('CMangaViewLayout');
 
 	CMMP.options.bCompactDesign = options.bCompactDesign;
@@ -450,10 +505,14 @@ CMMP.PrepareLayout = function PrepareLayout(options) {
 	tempDiv = document.getElementById("CMangaMaxUpdateTime");
 	tempDiv.onchange = CMMP.ChangeMaxUpdateTime;
 
+	CMMP.options.updateButton.onclick = CMMP.StartUpdating;
+
+	tempDiv = document.getElementById("CMangaExportImport");
+	tempDiv.onclick = CMMP.OpenExportImportTab;
+
 	tempDiv = document.getElementById('CMangaIcon');
 	tempDiv.onclick = function() {
-		//console.log(document.getElementById("CMangaContainer").outerHTML);
-		self.port.emit("StartUpdating");
+		console.log(document.getElementById("CMangaContainer").outerHTML);
 	};
 
 	tempDiv = document.getElementById("easteregg");
@@ -509,6 +568,23 @@ CMMP.UdapteLastUpdatedAt = function UdapteLastUpdatedAt() {
 	}
 };
 
+CMMP.OpenExportImportTab = function OpenExportImportTab() {
+	self.port.emit("OpenExportImportTab");
+};
+
+CMMP.UpdateStatus = function UpdateStatus(status) {
+	if (status == 0) {
+		CMMP.options.updateButton.className = "ready";
+	} else if (status == 1) {
+		CMMP.options.updateButton.className = "updating";
+	}
+};
+
+CMMP.StartUpdating = function StartUpdating() {
+	self.port.emit("StartUpdating");
+};
+
+
 CMMP.Show = function Show() {
 	if (!CMMP.options.bCompactDesign) {
 		CMMP.UdapteLastUpdatedAt();
@@ -522,6 +598,17 @@ CMMP.Main = function Main() {
 	self.port.on("UdapteUpdateManga", CMMP.UdapteUpdateManga);
 	self.port.on("UdapteAddManga", CMMP.UdapteAddManga);
 	self.port.on("UdapteRemoveManga", CMMP.UdapteRemoveManga);
+
+	self.port.on("ReceiveAddonStatus", CMMP.ReceiveAddonStatus);
+	self.port.on("ReceiveDesign", CMMP.ReceiveDesign);
+	self.port.on("ReceiveInfiniteScrolling", CMMP.ReceiveInfiniteScrolling);
+	self.port.on("ReceiveMaxUpdateTime", CMMP.ReceiveMaxUpdateTime);
+	self.port.on("ReceiveNetSave", CMMP.ReceiveNetSave);
+	self.port.on("ReceiveNotificationStatus", CMMP.ReceiveNotificationStatus);
+	self.port.on("ReceiveShowPageNumber", CMMP.ReceiveShowPageNumber);
+	self.port.on("ReceiveUpdateTime", CMMP.ReceiveUpdateTime);
+
+	self.port.on("UpdateStatus", CMMP.UpdateStatus);
 
 	self.port.on("Show", CMMP.Show);
 };

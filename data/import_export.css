@@ -1,0 +1,83 @@
+html, body {
+	font-family: Roboto, Arial, sans-serif;
+	margin: 0;
+	padding: 20px;
+	background-color: #e1e1e1;
+}
+
+#tab_buttons > div {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	background-color: #BBBBBB;
+	padding: 6px 15px;
+	font-weight: 400;
+	border-radius: 0px 20px 0 0;
+	z-index: 5;
+}
+
+#tab_buttons > div + * {
+	margin-left: -10px;
+}
+
+#tab_buttons > div.Shown {
+	background-color: #ebebeb;
+	z-index: 10;
+}
+
+#tab_buttons > div:Hover {
+	background-color: #ffffff;
+}
+
+#tab_buttons > div.Shown:Hover {
+	background-color: #ebebeb;
+}
+
+#tab_content > div {
+	display: none;
+	background-color: #BBBBBB;
+	padding: 20px;
+	width: 664px;
+	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.3);
+}
+
+#tab_content > div.Shown {
+	display: block;
+	background-color: #ebebeb;
+}
+
+label {
+	margin-right: 10px;
+}
+
+.help_text {
+	font-size: 13px;
+	font-style: italic;
+}
+
+#ExportButton,#ImportButton {
+	width: 86px;
+	margin: 15px 0 15px 575px;
+	padding: 4px;
+	background-color: #d9e10a;
+	text-align: center;
+	cursor: pointer;
+}
+
+#ExportButton:hover,#ImportButton:hover{
+	background-color: #147be6;
+	color: #ffffff;
+}
+
+textarea {
+	width: 663px;
+	resize: none;
+}
+
+.feedback {
+	margin-bottom: 0;
+}
+
+.waiting {
+	color: #848484;
+}
