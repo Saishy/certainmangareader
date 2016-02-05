@@ -1,3 +1,4 @@
 .idea/
-certainmanga.xpi
-certainmanga.xpi.backup
+*.xpi
+*.backup
+.jpmignore
