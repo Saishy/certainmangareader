@@ -4,7 +4,7 @@
 **2.1.0**
 
 ####Current Beta Version
-**2.2.0beta**
+**2.2.0beta2**
 
 ###2.1.0 Stable Patch Notes
 - Batoto now reads and updates correctly.

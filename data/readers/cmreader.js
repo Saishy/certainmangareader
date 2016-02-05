@@ -379,6 +379,8 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 
 	wrapper.classList.add("CMangaWrapper");
 
+	wrapper.classList.add("CMangaPageMarkerDisabled");
+
 	var count = CMREADER.options.numberOfPages;
 	var newDiv, newImg, pageMarker, pageSet;
 
@@ -420,8 +422,8 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 		};
 	}
 
-	if ("bShowPageNumbers" in CMREADER.options && CMREADER.options.bShowPageNumbers === false) {
-		wrapper.classList.add("CMangaPageMarkerDisabled");
+	if ("bShowPageNumbers" in CMREADER.options && CMREADER.options.bShowPageNumbers === true) {
+		wrapper.classList.remove("CMangaPageMarkerDisabled");
 	}
 
 	if ("bInfiniteScrolling" in CMREADER.options && CMREADER.options.bInfiniteScrolling === false) {
