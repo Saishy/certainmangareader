@@ -1,5 +1,5 @@
 body {
-	min-height: auto !important;
+	min-height: unset !important;
 }
 
 #CMangaTopMenu {

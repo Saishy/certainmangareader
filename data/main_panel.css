@@ -17,6 +17,10 @@ body {
 	border: 2px solid #ffffff;
 }
 
+*:focus {
+	outline: none;
+}
+
 a {
 	color: inherit; /* blue colors for links too */
 	text-decoration: inherit; /* no underline */
@@ -61,6 +65,48 @@ a {
 	line-height: 16px;
 }
 
+#CMangaActionButtons {
+	text-align: right;
+	margin-top: 12px;
+}
+
+#CMangaActionButtons > div {
+	display: inline-block;
+	font-size: 13px;
+	width: 100px;
+	text-align: center;
+	padding: 2px;
+	border-radius: 5px;
+}
+
+#CMangaExportImport {
+	cursor: pointer;
+	color: #ffffff;
+	background-color: #147be6;
+}
+
+#CMangaUpdateNow.ready {
+	background-color: #d9e10a;
+}
+
+#CMangaUpdateNow.updating {
+	background-color: #BBBBBB;
+}
+
+#CMangaUpdateNow > span {
+	display: none;
+}
+
+#CMangaUpdateNow.updating > span.updating {
+	display: block;
+	cursor: default;
+}
+
+#CMangaUpdateNow.ready > span.ready {
+	display: block;
+	cursor: pointer;
+}
+
 #CMangaSettingsMenu {
 	width: 480px;
 	margin-top: 8px;
@@ -68,7 +114,7 @@ a {
 	border-top: 1px solid #ebebeb;
 	border-bottom: 2px solid #ffffff;
 	border-radius: 0 0 8px 8px;
-	max-height: 86px;
+	max-height: 121px;
 	overflow: hidden;
 	transition: all 0.3s ease;
 }
@@ -104,6 +150,15 @@ a {
 	width: 90px;
 	margin-left: 2px;
 	margin-right: 8px;
+	margin-bottom: 1px;
+	line-height: 19px;
+	height: 20px;
+	border: 0;
+	cursor: pointer;
+	-moz-appearance: none;
+	border-radius: 5px;
+	color: transparent;
+  text-shadow: 0 0 0 #000;
 }
 
 #CMangaUpdateTime option, #CMangaMaxUpdateTime option {
@@ -130,15 +185,30 @@ a {
 	overflow-x: hidden;
 }
 
+.CMangaCover {
+	display: inline-block;
+	vertical-align: top;
+	width: 60px;
+	height: 85px;
+	background-size: cover;
+	background-color: #FFFFFF;
+}
+
 .CMangaName {
 	display: inline-block;
-	width: 190px;
 	vertical-align: middle;
 	font-weight: 500;
 	font-size: 15px;
 	position: relative;
 	z-index: 1;
 	padding: 0 6px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: top;
+	width: 403px;
+	height: 17px;
+	line-height: 17px;
 }
 
 .CMangaName.CMangaJustUpdated {
@@ -192,7 +262,10 @@ a {
 }
 
 .CMangaLine {
-	width: 100%;
+	display: inline-block;
+	position: relative;
+	width: 416px;
+	margin-left: 4px;
 }
 
 .CMangaLine + .CMangaLine {
@@ -200,6 +273,7 @@ a {
 }
 
 .CMangaList {
+	overflow: hidden;
 	padding: 4px 4px;
 	width: 487px;
 	margin-top: 2px;
@@ -236,36 +310,12 @@ a {
 }
 
 .CMangaBigLayout .CMangaList {
-	overflow: hidden;
 	padding: 4px;
 	height: 85px;
 }
 
-.CMangaCover {
-	display: inline-block;
-	vertical-align: top;
-	width: 60px;
-	height: 85px;
-	background-size: cover;
-	background-color: #FFFFFF;
-}
-
 .CMangaBigLayout .CMangaLine {
-	display: inline-block;
-	position: relative;
-	width: 416px;
 	height: 100%;
-	margin-left: 4px;
-}
-
-.CMangaBigLayout .CMangaName {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	vertical-align: top;
-	width: 403px;
-	height: 17px;
-	line-height: 17px;
 }
 
 .CMangaText {
@@ -281,12 +331,12 @@ a {
 	font-size: 14px;
 }
 
-.CMangaBigLayout .CMangaSelector {
+.CMangaSelector {
 	width: 268px;
 	margin-left: 4px;
 }
 
-.CMangaBigLayout .CMangaSelector option {
+.CMangaSelector option {
 	min-width: 100%;
 	max-width: 304px;
 }
@@ -304,6 +354,29 @@ a {
 	bottom: 0;
 	width: 16px;
 	height: 16px;
+}
+
+/* COMPACT LAYOUT SCHEME */
+
+.CMangaCompactLayout .CMangaCover {
+	display: none;
+}
+
+.CMangaCompactLayout .CMangaLine {
+	width: 475px;
+}
+
+.CMangaCompactLayout .CMangaName {
+	text-align: left;
+	width: 463px;
+}
+
+.CMangaCompactLayout .CMangaSelector {
+	width: 307px;
+}
+
+.CMangaCompactLayout .CMangaLastUpdateTime {
+	display: none;
 }
 
 /* Switch CSS */

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!--<link href="import_export.css" type="text/css" rel="stylesheet">-->
+<head>
+	<meta charset="UTF-8">
+	<title>A Certain Manga Exporter/Importer</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,500italic,300,400italic,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<div id="tab_buttons"><div id="TabExporter" class="Shown">Export</div><div id="TabImporter">Import</div></div>
+	<div id="tab_content">
+		<div id="Exporter" class="Shown">
+			<label><input type="checkbox" id="export_settings" value="settings" checked="true"> Include Settings</label>
+			<label><input type="checkbox" id="export_mangas" value="mangas" checked="true"> Include Mangas</label>
+
+			<div id="ExportButton">Export</div>
+			<textarea id="exporttext" rows="15" cols="80" readonly="true"></textarea>
+
+			<p id="export_feedback" class="feedback waiting">Awaiting input...</p>
+		</div>
+		<div id="Importer">
+			<label><input type="checkbox" id="import_settings" value="settings" checked="true"> Include Settings</label>
+			<label><input type="checkbox" id="import_mangas" value="mangas" checked="true"> Include Mangas</label>
+			<label><input type="checkbox" id="import_overwrite" value="overwrite" checked="true"> Overwrite Mangas*</label>
+			<div class="help_text">*If marked when importing a manga that already exists, it will overwrite the manga's current data</div>
+
+			<div id="ImportButton">Import</div>
+			<textarea id="importtext" rows="15" cols="80"></textarea>
+
+			<p id="import_feedback" class="feedback waiting">Please paste your data and press Import.</p>
+		</div>
+	</div>
+	<!--<script src="import_export.js" rel="script" type="text/javascript"></script>-->
+</body>
+</html>
