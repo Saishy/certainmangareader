@@ -3,6 +3,8 @@ if (typeof CMREADER == 'undefined' || CMREADER == null) {
 	CMREADER.options = {};
 }
 CMREADER.options.siteName = "CMREADER";
+/** If true, will reload after a location.assign() */
+CMREADER.options.bShouldReload = false;
 
 CMREADER.StripImageFromDOM = false;
 
@@ -181,6 +183,9 @@ CMREADER.GoToChapter = function GoToChapter(number) {
 
 	if (dest != CMREADER.options.chapterURL) {
 		window.location.assign(dest);
+		if (CMREADER.options.bShouldReload) {
+			window.location.reload(true);
+		}
 	}
 };
 

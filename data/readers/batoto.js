@@ -3,6 +3,7 @@ if (typeof CMREADER == 'undefined' || CMREADER == null) {
 	CMREADER.options = {};
 }
 CMREADER.options.siteName = "Batoto";
+CMREADER.options.bShouldReload = true;
 
 CMREADER.StripImageFromDOM = function StripImageFromDOM(DOMData) {
 	if (!DOMData) {
@@ -25,7 +26,7 @@ CMREADER.StripImageFromDOM = function StripImageFromDOM(DOMData) {
 
 CMREADER.LoadImageAtPage = function LoadImageAtPage(pageNumber) {
 	var request = new XMLHttpRequest;
-	var pageUrl = CMREADER.options.chapterURL + "/" + (parseInt(pageNumber) + 1);
+	var pageUrl = "/areader?id=" + CMREADER.options.cid + "&p=" + (parseInt(pageNumber) + 1);
 	//pageUrl = pageUrl.replace("http://", "");
 	//pageUrl = pageUrl.replace("bato.to", "");
 
@@ -84,13 +85,13 @@ CMREADER.PrepareLayout = function PrepareLayout() {
 		wrapper.innerHTML = "";
 		wrapper.removeAttribute('style');
 
-		var content = document.getElementById("content");
+		/*var content = document.getElementById("content");
 		if (content) {
 			content.className = "hideContent";
-		}
+		}*/
 	} else {
 		wrapper = document.getElementById("content");
-		wrapper.className = "hideContent";
+		//wrapper.className = "hideContent";
 
 		newDiv = document.createElement('div');
 		newDiv.id = "comic_wrap";
@@ -106,6 +107,20 @@ CMREADER.PrepareLayout = function PrepareLayout() {
 	CMREADER.PrepareLayoutPages(wrapper);
 
 	wrapper.appendChild(document.getElementById("footer_utilities"));
+};
+
+/** Get Chapter ID */
+CMREADER.GetCID = function GetCID() {
+	if (window.location.hash.length <= 1) {
+		return;
+	}
+
+	var hashL = window.location.hash.substring(1).split('_');
+	if (hashL.length === 0) {
+		return;
+	}
+
+	CMREADER.options.cid = hashL[0];
 };
 
 CMREADER.GetMangaCover = function GetMangaCover() {
@@ -165,6 +180,29 @@ CMREADER.GetMangaCover = function GetMangaCover() {
 };
 
 CMREADER.GetListOfChapters = function GetListOfChapters() {
+	var readerDOM = document.getElementById("reader");
+
+	// create an observer instance
+	var observer = new MutationObserver(function(mutations) {
+		mutations.forEach(function(mutation) {
+			//console.log("-----------");
+			//console.log(mutation.type);
+			//console.log("-----------");
+
+			if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+				observer.disconnect();
+				CMREADER.FinishedChapterList();
+			}
+		});
+	});
+
+	// pass in the target node, as well as the observer options
+	observer.observe(readerDOM, {childList: true});
+};
+
+CMREADER.FinishedChapterList = function FinishedChapterList() {
+	CMREADER.GetMangaName();
+
 	var list = document.getElementsByName("chapter_select");
 
 	if (!list) {
@@ -193,6 +231,37 @@ CMREADER.GetListOfChapters = function GetListOfChapters() {
 	CMREADER.options.chapters = listOfChapters;
 	CMREADER.options.chapterNames = listOfChapterNames;
 	CMREADER.options.chapterName = list.options[list.selectedIndex].textContent.trim();
+
+	// Continue to swim~
+
+	CMREADER.GetMangaCover();
+
+	CMREADER.GetNumberOfPages();
+
+	CMREADER.options.pages = new Array(CMREADER.options.numberOfPages);
+	CMREADER.options.pageSources = new Array(CMREADER.options.numberOfPages);
+
+	CMREADER.PrepareLayout();
+
+	CMREADER.LoadAllImages();
+
+	//Fix for Chapter buttons at the end of page, for Batoto only.
+	var nextChapterTag = document.getElementById('CMRNextChapter');
+	if (nextChapterTag.style.visibility == "visible") {
+		nextChapterTag.onclick = function() {CMREADER.GoToChapter("next")};
+	}
+	var previousChapterTag = document.getElementById('CMRPreviousChapter');
+	if (previousChapterTag.style.visibility == "visible") {
+		previousChapterTag.onclick = function() {CMREADER.GoToChapter("back")};
+	}
+
+	//End of fix
+
+	if (typeof CMMENU != 'undefined' && CMMENU != null) {
+		CMMENU.SetChapterList(CMREADER.options.chapterNames, CMREADER.options.chapterName);
+		CMMENU.SetHomeUrl(CMREADER.options.mangaURL);
+		CMREADER.CheckSubscription();
+	}
 };
 
 CMREADER.GetNumberOfPages = function GetNumberOfPages() {
@@ -203,7 +272,7 @@ CMREADER.GetNumberOfPages = function GetNumberOfPages() {
 		return;
 	}
 
-	window.location.assign(CMREADER.options.chapterURL + "?supress_webtoon=t");
+	//window.location.assign(CMREADER.options.chapterURL + "?supress_webtoon=t");
 };
 
 CMREADER.GetMangaName = function GetMangaName() {
@@ -216,8 +285,24 @@ CMREADER.GetMangaName = function GetMangaName() {
 };
 
 CMREADER.GetChapterURL = function GetChapterURL() {
-	CMREADER.options.chapterURL = window.content.location.href.replace(/(\/\d+$|\?.*)/, '');
-	CMREADER.options.chapterURL = CMREADER.options.chapterURL.replace(/(\/\d*$)/, '');
+	CMREADER.options.chapterURL = window.content.location.href.replace(/(\?.*)/, '');
+	//CMREADER.options.chapterURL = window.content.location.href.replace(/(\/\d+$|\?.*)/, '');
+	//CMREADER.options.chapterURL = CMREADER.options.chapterURL.replace(/(\/\d*$)/, '');
+};
+
+CMREADER.InitOptions = function InitOptions() {
+	CMREADER.GetChapterURL();
+	CMREADER.GetCID();
+	CMREADER.GetListOfChapters();
+};
+
+CMREADER.Main = function Main() {
+	try {
+		CMREADER.InitOptions();
+	} catch(e) {
+		//console.log(e.name);
+		//console.log(e.message);
+	}
 };
 
 self.port.on("StartMain", CMREADER.Main);

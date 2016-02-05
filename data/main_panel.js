@@ -110,6 +110,8 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 
 	var mangaDiv, lineDiv, tempElem, tempElem2, optionDiv;
 
+	var now = Date.now();
+
 	bFullRead = true;
 	mangaNameId = mangaData.name.replace(" ", "_") + mangaData.site;
 	originalDiv = document.getElementById(mangaNameId);
@@ -130,6 +132,9 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 
 	tempElem = document.createElement('div');
 	tempElem.className = 'CMangaName CMangaNameLink';
+	if (now - mangaData.lastUpdatedAt <= 10000) {
+		tempElem.className += ' CMangaJustUpdated';
+	}
 	tempElem.textContent = mangaData.name;
 	tempElem.dataset.mangaUrl = mangaData.mangaURL;
 
@@ -591,6 +596,15 @@ CMMP.Show = function Show() {
 	}
 };
 
+CMMP.Hide = function Hide() {
+	var updateElems = document.getElementsByClassName("CMangaJustUpdated");
+	var x = updateElems.length;
+
+	while(x--) {
+		updateElems[x].classList.remove("CMangaJustUpdated");
+	}
+};
+
 CMMP.Main = function Main() {
 	CMMP.PrepareLayout(self.options.data);
 	CMMP.SetInitialConfig(self.options.data);
@@ -611,6 +625,7 @@ CMMP.Main = function Main() {
 	self.port.on("UpdateStatus", CMMP.UpdateStatus);
 
 	self.port.on("Show", CMMP.Show);
+	self.port.on("Hide", CMMP.Hide);
 };
 
 CMMP.Main();

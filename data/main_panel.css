@@ -211,6 +211,10 @@ a {
 	line-height: 17px;
 }
 
+.CMangaName.CMangaJustUpdated {
+	color: #FFFFFF;
+}
+
 .CMangaNameLink {
 	cursor: pointer;
 }
@@ -285,6 +289,10 @@ a {
 	width: 100%;
 	height: 100%;
 	opacity: 0.5;
+}
+
+.CMangaJustUpdated > .CMangaNameBg {
+	background-color: #147be6;
 }
 
 .fullRead {
