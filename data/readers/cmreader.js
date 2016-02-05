@@ -420,11 +420,11 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 		};
 	}
 
-	if (!CMREADER.options.bShowPageNumbers) {
+	if ("bShowPageNumbers" in CMREADER.options && CMREADER.options.bShowPageNumbers === false) {
 		wrapper.classList.add("CMangaPageMarkerDisabled");
 	}
 
-	if (!CMREADER.options.bInfiniteScrolling) {
+	if ("bInfiniteScrolling" in CMREADER.options && CMREADER.options.bInfiniteScrolling === false) {
 		wrapper.classList.add("CMangaPagePerPage");
 		CMREADER.SetActivePage(0);
 	}
