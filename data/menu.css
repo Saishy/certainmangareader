@@ -13,6 +13,12 @@
 	text-align: center;
 }
 
+#CMangaTopMenu, #CMangaTopMenu * {
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
 #CMangaTopMenu:hover {
 	top: 0;
 	background-color: #000000;

@@ -128,22 +128,33 @@ CMREADER.GetListOfChapters = function GetListOfChapters() {
 		}
 	}
 
-	var request = new XMLHttpRequest;
+	var listOfChapters = new Array();
+	var listOfChapterNames = new Array();
+	var chN;
 
-	request.open("GET", CMREADER.options.mangaURL.replace("mangastream.com","readms.com"), true);
-	request.responseType = "document";
+	var aElem;
+	var i = list.children.length;
+	while(i--) {
+		aElem = list.children[i].getElementsByTagName('a')[0];
+		if(aElem && aElem.children.length > 0) {
+			chN = {
+				name: aElem.children[0].textContent.trim(),
+				url: aElem.getAttribute("href").replace(/(\?.*)/, '')
+			};
 
-	//console.log("- REQUESTING MANGA CHAPTERS FOR MANGA STREAM -");
+			//console.log("currentUrl: " + CMREADER.options.chapterURL + " | chapterUrl: " + chN.url);
 
-	request.onreadystatechange = function() {
-		if (request.readyState == 4 && request.status == 200) {
-			if (request.response) {
-				CMREADER.FinishedChapterList(request.response);
+			if (window.content.location.href == chN.url) {
+				CMREADER.options.chapterName = chN.name;
 			}
-		}
-	};
 
-	request.send(null);
+			listOfChapters.push(chN);
+			listOfChapterNames.push(chN.name);
+		}
+	}
+
+	CMREADER.options.chapters = listOfChapters;
+	CMREADER.options.chapterNames = listOfChapterNames;
 };
 
 CMREADER.GetNumberOfPages = function GetNumberOfPages() {
@@ -170,7 +181,7 @@ CMREADER.GetNumberOfPages = function GetNumberOfPages() {
 };
 
 CMREADER.GetMangaName = function GetMangaName() {
-	var name = document.querySelector(".btn.dropdown-toggle .visible-desktop.visible-tablet");
+	var name = document.querySelector(".btn.btn-default.dropdown-toggle").children[0];
 
 	if (name) {
 		CMREADER.options.mangaName = name.textContent.trim();
@@ -182,54 +193,14 @@ CMREADER.GetChapterURL = function GetChapterURL() {
 	CMREADER.options.chapterURL = CMREADER.options.chapterURL.replace(/(\/\d*$)/, '');
 };
 
-CMREADER.FinishedChapterList = function FinishedChapterList(domData) {
-	var listOfChapters = new Array();
-	var listOfChapterNames = new Array();
-	var chN;
-
-	var table = domData.querySelector("table.table").firstElementChild;
-	var aElem;
-	var i = table.children.length;
-	while(i--) {
-		aElem = table.children[i].getElementsByTagName('a')[0];
-		if(aElem) {
-			chN = {
-				name: aElem.textContent.trim(),
-				url: aElem.getAttribute("href").replace(/(\?.*)/, '')
-			};
-
-			listOfChapters.push(chN);
-			listOfChapterNames.push(chN.name);
-		}
-	}
-
-	CMREADER.options.chapters = listOfChapters;
-	CMREADER.options.chapterNames = listOfChapterNames;
-	var chapterNameDiv = document.querySelector(".controls .btn.dropdown-toggle");
-	for each (var node in chapterNameDiv.childNodes) {
-		if (node.data && node.data.trim()) {
-			var chapterName = node.data.trim() + chapterNameDiv.children[1].textContent;
-		}
-	}
-	CMREADER.options.chapterName = chapterName.trim();
-
-	CMREADER.LoadAllImages();
-
-	if (typeof CMMENU != 'undefined' && CMMENU != null) {
-		CMMENU.SetChapterList(CMREADER.options.chapterNames, CMREADER.options.chapterName);
-		CMMENU.SetHomeUrl(CMREADER.options.mangaURL);
-		CMREADER.CheckSubscription();
-	}
-};
-
-CMREADER.Main = function Main() {
+/*CMREADER.Main = function Main() {
 	try {
 		CMREADER.InitOptions();
 		CMREADER.PrepareLayout();
 	} catch(e) {
-		//console.log(e.name);
-		//console.log(e.message);
+		console.log(e.name);
+		console.log(e.message);
 	}
-};
+};*/
 
 self.port.on("StartMain", CMREADER.Main);
