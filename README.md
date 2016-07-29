@@ -1,20 +1,20 @@
 # certainmangareader
 
 ####Current Stable Version
-**1.2.10**
+**2.3.0**
 
 ####Current Beta Version
-**2.0.0beta2**
+**2.3.0-beta**
 
-##Currently due to circunstances regarding lack of version control the stable version development is halted until 2.0.0 launch
-**Please use the 2.0.0beta2 version as it contains the MangaFox bug fix**
+###2.3.0 Stable Patch Notes
+- Fixed mangastream reading
+- Updates should be more reliable
 
-###To-Do Stable Version
-- Release 2.0.0
+###2.3.0 Beta Patch Notes
+- Fixed mangastream reading
+- Updates should be more reliable
 
-###To-Do Beta Version
-- Fix batoto first page bug.
-- Fix update halting bug.
-- Add mangareader support.
-- Add mangahere support.
+###To-Do
+- Add an option to reload a page when it does not load.
 - Add mangacow support.
+- Add kissmanga support.
