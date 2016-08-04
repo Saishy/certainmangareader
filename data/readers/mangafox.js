@@ -187,10 +187,31 @@ CMREADER.PageLoaded = function PageLoaded(pageNumber) {
 	}
 
 	CMREADER.options.pages[pageNumber].img.onerror = function() {
-		this.onerror = function() {
-			this.src = this.src.replace("a.mfcdn.net", "l.mfcdn.net");
-		};
-		this.src = this.src.replace("z.mfcdn.net", "a.mfcdn.net");
+		var re = /([achlz])\.mfcdn\.net/;
+		var m = this.src.match(re);
+
+		if (m == null || m.length < 2) {
+			return;
+		}
+
+		switch(m[1]) {
+			case 'a':
+				this.src = this.src.replace("a.mfcdn.net", "c.mfcdn.net");
+				break;
+			case 'c':
+				this.src = this.src.replace("c.mfcdn.net", "h.mfcdn.net");
+				break;
+			case 'h':
+				this.src = this.src.replace("h.mfcdn.net", "l.mfcdn.net");
+				break;
+			case 'l':
+				this.src = this.src.replace("l.mfcdn.net", "z.mfcdn.net");
+				break;
+			case 'z':
+				break;
+			default:
+				break;
+		}
 	};
 	CMREADER.options.pages[pageNumber].img.src = CMREADER.options.pageSources[pageNumber];
 

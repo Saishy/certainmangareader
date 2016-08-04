@@ -1,14 +1,13 @@
 # certainmangareader
 
 ####Current Stable Version
-**2.3.0**
+**2.3.1**
 
 ####Current Beta Version
 **2.3.0-beta**
 
-###2.3.0 Stable Patch Notes
-- Fixed mangastream reading
-- Updates should be more reliable
+###2.3.1 Stable Patch Notes
+- Added more mangafox servers to image loading
 
 ###2.3.0 Beta Patch Notes
 - Fixed mangastream reading
