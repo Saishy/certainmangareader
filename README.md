@@ -1,12 +1,12 @@
 # certainmangareader
 
 ####Current Stable Version
-**2.3.1**
+**2.3.2**
 
 ####Current Beta Version
 **2.3.0-beta**
 
-###2.3.1 Stable Patch Notes
+###2.3.2 Stable Patch Notes
 - Added more mangafox servers to image loading
 
 ###2.3.0 Beta Patch Notes

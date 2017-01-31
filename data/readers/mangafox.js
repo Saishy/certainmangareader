@@ -57,7 +57,7 @@ CMREADER.LoadImageAtPage = function LoadImageAtPage(pageNumber) {
 		if (request.readyState == 4 && request.status == 200) {
 			//console.log(request.responseText);
 			if (request.response) {
-				CMREADER.options.pageSources[pageNumber] = CMREADER.StripImageFromDOM(request.response).replace(/http:\/\/(.)/i, "http://z");
+				CMREADER.options.pageSources[pageNumber] = CMREADER.StripImageFromDOM(request.response).replace(/http:\/\/(.)/i, "http://a");
 				CMREADER.PageLoaded(pageNumber);
 
 				/*if (pageNumber == CMREADER.options.numberOfPages - 1) {
@@ -66,7 +66,7 @@ CMREADER.LoadImageAtPage = function LoadImageAtPage(pageNumber) {
 
 				var secondImageSrc = CMREADER.StripSecondImageFromDOM(request.response);
 				if (secondImageSrc !== false) {
-					CMREADER.options.pageSources[pageNumber+1] = secondImageSrc.replace(/http:\/\/(.)/i, "http://z");
+					CMREADER.options.pageSources[pageNumber+1] = secondImageSrc.replace(/http:\/\/(.)/i, "http://a");
 					CMREADER.PageLoaded(pageNumber+1);
 				}
 
