@@ -7,6 +7,12 @@
 	"homepage_url": "https://github.com/saishy/certainmangareader",
 	"author": "Saishy (http://certainprogrammer.com)",
 
+	"applications": {
+		"gecko": {
+			"id": "certainmangareader@saishy"
+		}
+	},
+
 	"icons": {
 		"64": "data/img/icon-64.png",
 		"32": "data/img/icon-32.png"
@@ -16,5 +22,10 @@
 		"default_icon": "data/img/icon-32.png",
 		"default_title": "A Certain Manga Reader",
 		"default_popup": "data/main_panel.html"
-	}
+	},
+
+	"permissions": [
+		"storage",
+		"alarms"
+	]
 }
