@@ -389,4 +389,6 @@ CMREADER.Main = function Main() {
 	}
 };
 
-self.port.on("StartMain", CMREADER.Main);
+//browser.runtime.onMessage.addListener("StartMain", CMREADER.Main);
+CMREADER.Main();
+
