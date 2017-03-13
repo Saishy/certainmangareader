@@ -18,6 +18,10 @@
 		"32": "data/img/icon-32.png"
 	},
 
+	"background": {
+		"page": "lib/main.html"
+	},
+
 	"browser_action": {
 		"default_icon": "data/img/icon-32.png",
 		"default_title": "A Certain Manga Reader",
@@ -27,5 +31,13 @@
 	"permissions": [
 		"storage",
 		"alarms"
+	],
+
+	"content_scripts":[
+		{
+			"matches": ["*://*.mangafox.me/*"],
+			"js": ["content_scripts/mangafox.js"],
+			"css": ["content_scripts/mangafox.css"]
+		}
 	]
 }
