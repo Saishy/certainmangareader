@@ -36,32 +36,32 @@
 	"content_scripts":[
 		{
 			"matches": ["*://*.bato.to/*"],
-			"js": ["content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/batoto.js"],
+			"js": ["browser-polyfill.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/batoto.js"],
 			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/batoto.css"]
 		},
 		{
 			"matches": ["*://*.mangafox.me/*"],
-			"js": ["content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/mangafox.js"],
+			"js": ["browser-polyfill.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/mangafox.js"],
 			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/mangafox.css"]
 		},
 		{
 			"matches": ["*://*.mangahere.co/*"],
-			"js": ["content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/mangahere.js"],
+			"js": ["browser-polyfill.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/mangahere.js"],
 			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/mangahere.css"]
 		},
 		{
 			"matches": ["*://*.mangareader.net/*"],
-			"js": ["content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/mangareader.js"],
+			"js": ["browser-polyfill.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/mangareader.js"],
 			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/mangareader.css"]
 		},
 		{
 			"matches": ["*://*.mangastream.com/*"],
-			"js": ["content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/mangastream.js"],
+			"js": ["browser-polyfill.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/mangastream.js"],
 			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/mangastream.css"]
 		},
 		{
 			"matches": ["*://*.readmanga.today/*"],
-			"js": ["content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/readmangatoday.js"],
+			"js": ["browser-polyfill.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/readmangatoday.js"],
 			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/readmangatoday.css"]
 		}
 	]
