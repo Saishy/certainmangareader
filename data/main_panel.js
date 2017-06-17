@@ -606,8 +606,15 @@ CMMP.Hide = function Hide() {
 };
 
 CMMP.Main = function Main() {
-	CMMP.PrepareLayout(self.options.data);
-	CMMP.SetInitialConfig(self.options.data);
+	function onGot(item) {
+		CMMP.PrepareLayout(item);
+		CMMP.SetInitialConfig(item);
+	}
+	function onError(error) {
+		console.log(`ACMR: Failed to get internal options: ${error}`);
+	}
+	let getItem = browser.storage.local.get();
+	getItem.then(onGot, onError);
 
 	self.port.on("UdapteUpdateManga", CMMP.UdapteUpdateManga);
 	self.port.on("UdapteAddManga", CMMP.UdapteAddManga);
