@@ -613,7 +613,13 @@ CMMP.Hide = function Hide() {
 };
 
 CMMP.ListenMessages = function ListenMessages(message){
+	console.log("ACMR (panel): Received a message");
+	console.log(message)
 	switch (message.type) {
+		case "SendDataFromMain":
+			CMMP.PrepareLayout(message.parameter);
+			CMMP.SetInitialConfig(message.parameter);
+			break;
 		case "UdapteAddManga":
 			CMMP.UdapteAddManga(message.parameter);
 			break;
@@ -662,15 +668,8 @@ CMMP.ListenMessages = function ListenMessages(message){
 CMMP.Main = function Main() {
 	browser.runtime.onMessage.addListener(CMMP.ListenMessages);
 
-	function onGot(item) {
-		CMMP.PrepareLayout(item);
-		CMMP.SetInitialConfig(item);
-	}
-	function onError(error) {
-		console.log(`ACMR: Failed to get internal options: ${error}`);
-	}
-	let getItem = browser.storage.local.get();
-	getItem.then(onGot, onError);
+	CMMP.SendMessage("GetDataFromMain");
+
 	/*
 	self.port.on("UdapteUpdateManga", CMMP.UdapteUpdateManga);
 	self.port.on("UdapteAddManga", CMMP.UdapteAddManga);
