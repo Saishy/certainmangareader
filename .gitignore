@@ -2,3 +2,4 @@
 *.xpi
 *.backup
 .jpmignore
+export.json
