@@ -3,6 +3,13 @@ if (typeof CMMP == 'undefined' || CMMP == null) {
 	CMMP.options = {};
 }
 
+CMMP.SendMessage = function SendMessage(messageType, messageParameter){
+	browser.runtime.sendMessage({
+		"type": messageType,
+		"parameter": messageParameter}
+	);
+}
+
 /**
  * @return {string}
  */
@@ -65,11 +72,11 @@ CMMP.UdapteRemoveManga = function UdapteAddManga(mangaData) {
 };
 
 CMMP.OpenMangaPage = function OpenMangaPage() {
-	self.port.emit("OpenTab", this.dataset.mangaUrl);
+	CMMP.SendMessage("OpenTab", this.dataset.mangaUrl);
 };
 
 CMMP.MangaSelector = function MangaSelector() {
-	self.port.emit("OpenTab", this.options[this.selectedIndex].value);
+	CMMP.SendMessage("OpenTab", this.options[this.selectedIndex].value);
 
 	for (var i = 0; i < this.options.length; i++) {
 		if (this.options[i].text === this.dataset.atChapter) {
@@ -82,7 +89,7 @@ CMMP.MangaSelector = function MangaSelector() {
 CMMP.ReadChapter = function ReadChapter() {
 	var temp = this.parentNode;
 	temp = temp.getElementsByClassName("CMangaSelector")[0];
-	self.port.emit("OpenTab", temp.options[temp.selectedIndex].value);
+	CMMP.SendMessage("OpenTab", temp.options[temp.selectedIndex].value);
 };
 
 CMMP.MarkAsRead = function MarkAsRead() {
@@ -93,7 +100,7 @@ CMMP.MarkAsRead = function MarkAsRead() {
 	mangaData.site = this.dataset.mangaSite;
 	mangaData.atChapter = temp.getElementsByClassName("CMangaSelector")[0].options[0].textContent;
 
-	self.port.emit("MarkAsRead", mangaData);
+	CMMP.SendMessage("MarkAsRead", mangaData);
 };
 
 CMMP.Remove = function Remove() {
@@ -102,7 +109,7 @@ CMMP.Remove = function Remove() {
 	mangaData.name = this.dataset.mangaName;
 	mangaData.site = this.dataset.mangaSite;
 
-	self.port.emit("Remove", mangaData);
+	CMMP.SendMessage("Remove", mangaData);
 };
 
 CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bReturn) {
@@ -327,7 +334,7 @@ CMMP.ReceiveMaxUpdateTime = function ReceiveMaxUpdateTime(status) {
 CMMP.AddonOnOff = function AddonOnOff() {
 	var temp = document.getElementById("CMangaSwitch").checked;
 
-	self.port.emit("ChangeAddonStatus", temp);
+	CMMP.SendMessage("ChangeAddonStatus", temp);
 };
 
 CMMP.ToggleSettingsMenu = function ToggleSettingsMenu() {
@@ -342,7 +349,7 @@ CMMP.ToggleSettingsMenu = function ToggleSettingsMenu() {
 CMMP.NotificationCheck = function NotificationCheck() {
 	var temp = document.getElementById("CMangaNotifications").checked;
 
-	self.port.emit("ChangeNotificationStatus", temp);
+	CMMP.SendMessage("ChangeNotificationStatus", temp);
 };
 
 CMMP.CompactCheck = function CompactCheck() {
@@ -357,19 +364,19 @@ CMMP.CompactCheck = function CompactCheck() {
 		CMMP.UdapteLastUpdatedAt();
 	}
 
-	self.port.emit("ChangeDesign", temp);
+	CMMP.SendMessage("ChangeDesign", temp);
 };
 
 CMMP.PageMarkerCheck = function PageMarkerCheck() {
 	var temp = document.getElementById("CMangaPageCheck").checked;
 
-	self.port.emit("ChangeShowPageNumber", temp);
+	CMMP.SendMessage("ChangeShowPageNumber", temp);
 };
 
 CMMP.InfiniteCheck = function InfiniteCheck() {
 	var temp = document.getElementById("CMangaInfinite").checked;
 
-	self.port.emit("ChangeInfiniteScrolling", temp);
+	CMMP.SendMessage("ChangeInfiniteScrolling", temp);
 };
 
 CMMP.NetSaveCheck = function NetSaveCheck() {
@@ -381,7 +388,7 @@ CMMP.NetSaveCheck = function NetSaveCheck() {
 		document.getElementById("CMangaMaxUpdateTimeContainer").className = "hidden";
 	}
 
-	self.port.emit("ChangeNetSave", temp);
+	CMMP.SendMessage("ChangeNetSave", temp);
 };
 
 CMMP.ChangeUpdateTime = function ChangeUpdateTime() {
@@ -392,8 +399,8 @@ CMMP.ChangeUpdateTime = function ChangeUpdateTime() {
 		temp2.selectedIndex++;
 	}
 
-	self.port.emit("ChangeUpdateTime", temp.options[temp.selectedIndex].value);
-	self.port.emit("ChangeMaxUpdateTime", temp2.options[temp2.selectedIndex].value);
+	CMMP.SendMessage("ChangeUpdateTime", temp.options[temp.selectedIndex].value);
+	CMMP.SendMessage("ChangeMaxUpdateTime", temp2.options[temp2.selectedIndex].value);
 };
 
 CMMP.ChangeMaxUpdateTime = function ChangeMaxUpdateTime() {
@@ -404,8 +411,8 @@ CMMP.ChangeMaxUpdateTime = function ChangeMaxUpdateTime() {
 		temp.selectedIndex--;
 	}
 
-	self.port.emit("ChangeUpdateTime", temp.options[temp.selectedIndex].value);
-	self.port.emit("ChangeMaxUpdateTime", temp2.options[temp2.selectedIndex].value);
+	CMMP.SendMessage("ChangeUpdateTime", temp.options[temp.selectedIndex].value);
+	CMMP.SendMessage("ChangeMaxUpdateTime", temp2.options[temp2.selectedIndex].value);
 };
 
 // INITIAL SETTINGS ====================================================================================================
@@ -522,7 +529,7 @@ CMMP.PrepareLayout = function PrepareLayout(options) {
 
 	tempDiv = document.getElementById("easteregg");
 	tempDiv.onclick = function() {
-		self.port.emit("OpenTab", "http://myanimelist.net/anime/66/Azumanga_Daioh");
+		CMMP.SendMessage("OpenTab", "http://myanimelist.net/anime/66/Azumanga_Daioh");
 	};
 };
 
@@ -574,7 +581,7 @@ CMMP.UdapteLastUpdatedAt = function UdapteLastUpdatedAt() {
 };
 
 CMMP.OpenExportImportTab = function OpenExportImportTab() {
-	self.port.emit("OpenExportImportTab");
+	CMMP.SendMessage("OpenExportImportTab");
 };
 
 CMMP.UpdateStatus = function UpdateStatus(status) {
@@ -586,7 +593,7 @@ CMMP.UpdateStatus = function UpdateStatus(status) {
 };
 
 CMMP.StartUpdating = function StartUpdating() {
-	self.port.emit("StartUpdating");
+	CMMP.SendMessage("StartUpdating");
 };
 
 
