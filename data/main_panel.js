@@ -612,7 +612,56 @@ CMMP.Hide = function Hide() {
 	}
 };
 
+CMMP.ListenMessages = function ListenMessages(message){
+	switch (message.type) {
+		case "UdapteAddManga":
+			CMMP.UdapteAddManga(message.parameter);
+			break;
+		case "ReceiveAddonStatus":
+			CMMP.ReceiveAddonStatus(message.parameter);
+			break;
+		case "UdapteAddManga":
+			CMMP.UdapteAddManga(message.parameter);
+			break;
+		case "UdapteRemoveManga":
+			CMMP.UdapteRemoveManga(message.parameter);
+			break;
+		case "ReceiveAddonStatus":
+			CMMP.ReceiveAddonStatus(message.parameter);
+			break;
+		case "ReceiveDesign":
+			CMMP.ReceiveDesign(message.parameter);
+			break;
+		case "ReceiveInfiniteScrolling":
+			CMMP.ReceiveInfiniteScrolling(message.parameter);
+			break;
+		case "ReceiveMaxUpdateTime":
+			CMMP.ReceiveMaxUpdateTime(message.parameter);
+			break;
+		case "ReceiveNetSave":
+			CMMP.ReceiveNetSave(message.parameter);
+			break;
+		case "ReceiveNotificationStatus":
+			CMMP.ReceiveNotificationStatus(message.parameter);
+			break;
+		case "ReceiveShowPageNumber":
+			CMMP.ReceiveShowPageNumber(message.parameter);
+			break;
+		case "ReceiveUpdateTime":
+			CMMP.ReceiveUpdateTime(message.parameter);
+			break;
+		case "UpdateStatus":
+			CMMP.UpdateStatus(message.parameter);
+			break;
+		case "TestMessage":
+			console.log("hello!");
+			break;
+	}
+}
+
 CMMP.Main = function Main() {
+	browser.runtime.onMessage.addListener(CMMP.ListenMessages);
+
 	function onGot(item) {
 		CMMP.PrepareLayout(item);
 		CMMP.SetInitialConfig(item);
@@ -622,7 +671,7 @@ CMMP.Main = function Main() {
 	}
 	let getItem = browser.storage.local.get();
 	getItem.then(onGot, onError);
-
+	/*
 	self.port.on("UdapteUpdateManga", CMMP.UdapteUpdateManga);
 	self.port.on("UdapteAddManga", CMMP.UdapteAddManga);
 	self.port.on("UdapteRemoveManga", CMMP.UdapteRemoveManga);
@@ -640,6 +689,6 @@ CMMP.Main = function Main() {
 
 	self.port.on("Show", CMMP.Show);
 	self.port.on("Hide", CMMP.Hide);
-};
-
+	*/
+}
 CMMP.Main();
