@@ -1,6 +1,7 @@
 if (typeof CMMP == 'undefined' || CMMP == null) {
 	CMMP = {};
 	CMMP.options = {};
+	CMMP.modOpt = {};
 }
 
 CMMP.SendMessage = function SendMessage(messageType, messageParameter){
@@ -129,7 +130,7 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 
 	tempElem = document.createElement('div');
 	tempElem.className = 'CMangaCover';
-	var mangaCoverSrc = mangaData.coverSrc === 'null' ? self.options.modOpt[mangaData.site.toLowerCase() + "Cover"] : mangaData.coverSrc;
+	var mangaCoverSrc = mangaData.coverSrc === 'null' ? CMMP.modOpt[mangaData.site.toLowerCase() + "Cover"] : mangaData.coverSrc;
 	tempElem.style.backgroundImage = 'url("' + mangaCoverSrc + '")';
 
 	mangaDiv.appendChild(tempElem);
@@ -191,13 +192,13 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 
 	tempElem = document.createElement('img');
 	tempElem.className = 'CMangaReadChapter';
-	tempElem.src = self.options.modOpt.play;
+	tempElem.src = CMMP.modOpt.play;
 	tempElem.setAttribute("title", "Start reading");
 	lineDiv.appendChild(tempElem);
 
 	tempElem = document.createElement('img');
 	tempElem.className = 'CMangaMarkAsRead';
-	tempElem.src = self.options.modOpt.mark;
+	tempElem.src = CMMP.modOpt.mark;
 	tempElem.setAttribute("title", "Mark it as read");
 	tempElem.dataset.mangaName = mangaData.name;
 	tempElem.dataset.mangaSite = mangaData.site;
@@ -205,7 +206,7 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 
 	tempElem = document.createElement('img');
 	tempElem.className = 'CMangaRemove';
-	tempElem.src = self.options.modOpt.remove;
+	tempElem.src = CMMP.modOpt.remove;
 	tempElem.setAttribute("title", "Remove from list");
 	tempElem.dataset.mangaName = mangaData.name;
 	tempElem.dataset.mangaSite = mangaData.site;
@@ -218,7 +219,7 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 	lineDiv.appendChild(tempElem);
 
 	tempElem = document.createElement('img');
-	tempElem.src = self.options.modOpt[mangaData.site.toLowerCase()];
+	tempElem.src = CMMP.modOpt[mangaData.site.toLowerCase()];
 	tempElem.className = 'CMangaSiteIcon Icon-' + mangaData.site;
 	tempElem.setAttribute("title", mangaData.site);
 	lineDiv.appendChild(tempElem);
@@ -612,6 +613,8 @@ CMMP.Hide = function Hide() {
 	}
 };
 
+
+
 CMMP.ListenMessages = function ListenMessages(message){
 	console.log("ACMR (panel): Received a message");
 	console.log(message)
@@ -619,6 +622,9 @@ CMMP.ListenMessages = function ListenMessages(message){
 		case "SendDataFromMain":
 			CMMP.PrepareLayout(message.parameter);
 			CMMP.SetInitialConfig(message.parameter);
+			break;
+		case "SendPMOsFromMain":
+			CMMP.modOpt = message.parameter;
 			break;
 		case "UdapteAddManga":
 			CMMP.UdapteAddManga(message.parameter);
@@ -668,6 +674,7 @@ CMMP.ListenMessages = function ListenMessages(message){
 CMMP.Main = function Main() {
 	browser.runtime.onMessage.addListener(CMMP.ListenMessages);
 
+	CMMP.SendMessage("GetPMOsFromMain");
 	CMMP.SendMessage("GetDataFromMain");
 
 	/*
