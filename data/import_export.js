@@ -2,6 +2,13 @@ if (typeof CMIE == 'undefined' || CMIE == null) {
 	CMIE = {};
 };
 
+CMIE.SendMessage = function SendMessage(messageType, messageParameter){
+	browser.runtime.sendMessage({
+		"type": messageType,
+		"parameter": messageParameter}
+	);
+};
+
 CMIE.ChangeTab = function ChangeTab(e) {
 	//console.log(e);
 	var tabId = e.target.id;
@@ -22,7 +29,7 @@ CMIE.ChangeTab = function ChangeTab(e) {
 };
 
 CMIE.StartExport = function StartExport() {
-	self.port.emit("StartExport", {
+	CMIE.SendMessage("StartExport", {
 		settings: CMIE.options.DOM.export_settings.checked,
 		mangas: CMIE.options.DOM.export_mangas.checked
 	})
@@ -41,7 +48,7 @@ CMIE.StartImport = function StartImport() {
 		var obj = JSON.parse(CMIE.options.DOM.import_text.value);
 
 		if (obj && typeof obj === "object" && obj !== null) {
-			self.port.emit("StartImport", {
+			CMIE.SendMessage("StartImport", {
 				settings: CMIE.options.DOM.import_settings.checked,
 				mangas: CMIE.options.DOM.import_mangas.checked,
 				overwrite: CMIE.options.DOM.import_overwrite.checked,
@@ -93,15 +100,29 @@ CMIE.SetInitialState = function SetInitialState() {
 	CMIE.options.DOM.import_button.onclick = CMIE.StartImport;
 };
 
+CMIE.ListenMessages = function ListenMessages(message){
+	console.debug("ACMR (i-e): Received a message");
+	console.debug(message)
+	switch (message.type) {
+		case "ExportText":
+			CMIE.ExportText(message.parameter);
+			break;
+		case "ImportResult":
+			CMIE.ImportResult(message.parameter);
+			break;
+	}
+};
+
 CMIE.Main = function Main() {
+	browser.runtime.onMessage.addListener(CMIE.ListenMessages);
 	CMIE.options = {};
 
 	CMIE.SetInitialState();
 
-	self.port.on("ExportText", CMIE.ExportText);
-	self.port.on("ImportResult", CMIE.ImportResult);
+	//self.port.on("ExportText", CMIE.ExportText);
+	//self.port.on("ImportResult", CMIE.ImportResult);
 	//self.port.on("WorkerUpdateSubscribed", CMIE.WorkerUpdateSubscribed);
 	//self.port.on("ChangeInfiniteScrolling", CMIE.ChangeInfiniteScrolling);
 };
 
-self.port.on("StartMain", CMIE.Main);
+CMIE.Main();
