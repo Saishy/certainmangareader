@@ -1,6 +1,7 @@
 if (typeof CMREADER == 'undefined' || CMREADER == null) {
 	CMREADER = {};
 	CMREADER.options = {};
+	CMREADER.modOpt = {};
 }
 CMREADER.options.siteName = "CMREADER";
 /** If true, will reload after a location.assign() */
@@ -395,8 +396,8 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 		newDiv = document.createElement('div');
 		newDiv.id = "page" + (i + 1);
 		newDiv.className = "mangaPage";
-		//newDiv.style.backgroundImage = "url('" + self.options.loadingIcon + "')";
-		newDiv.style.background = "url('" + self.options.loadingIcon + "') center no-repeat";
+		//newDiv.style.backgroundImage = "url('" + CMMENU.modOpt.loadingIcon + "')";
+		newDiv.style.background = "url('" + CMMENU.modOpt.loadingIcon + "') center no-repeat";
 		//newDiv.style.width = "100%";
 		//newDiv.style.minHeight = "600px";
 
@@ -463,7 +464,7 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 	wrapper.appendChild(chapterButtonsDiv);
 	//<div style="width: 100%;" id="CMRChaptersButtons"><div id="CMRPreviousChapter">Previous Chapter</div><div id="CMRNextChapter">Next Chapter</div></div>
 
-	/*if (!self.options.bInfiniteScrolling) {
+	/*if (!CMMENU.modOpt.bInfiniteScrolling) {
 		wrapper.classList.add("CMangaPagePerPage");
 		CMREADER.SetActivePage(0);
 	}*/
@@ -536,7 +537,9 @@ CMREADER.ListenMessages = function ListenMessages(message){
 	console.debug("ACMR (reader): Received a message");
 	console.debug(message);
 	switch (message.type) {
-		// From main_panel
+		case "SendPMOsFromMainToMenu":
+			CMMENU.modOpt = message.parameter;
+			break;
 		case "ChangeInfiniteScrolling":
 			CMREADER.ChangeInfiniteScrolling(message.parameter);
 			break;
@@ -546,7 +549,4 @@ CMREADER.ListenMessages = function ListenMessages(message){
 	}
 }
 
-//self.port.on("StartMain", CMREADER.Main);
-//self.port.on("ChangeInfiniteScrolling", CMREADER.ChangeInfiniteScrolling);
-//self.port.on("ChangeShowPageNumber", CMREADER.ChangeShowPageNumber);
 browser.runtime.onMessage.addListener(CMREADER.ListenMessages);
