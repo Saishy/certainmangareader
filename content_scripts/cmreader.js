@@ -10,6 +10,13 @@ CMREADER.StripImageFromDOM = false;
 
 CMREADER.LoadImageAtPage = false;
 
+CMREADER.SendMessage = function SendMessage(messageType, messageParameter){
+	browser.runtime.sendMessage({
+		"type": messageType,
+		"parameter": messageParameter}
+	);
+}
+
 CMREADER.LoadAllImages = function LoadAllImages() {
 	CMREADER.SetChapterButtons();
 
@@ -90,7 +97,7 @@ CMREADER.AddToList = function AddToList() {
 		lastUpdatedAt: Date.now()
 	};
 
-	self.port.emit("AddToList", mangaData);
+	CMREADER.SendMessage("AddToList", mangaData);
 };
 
 CMREADER.UpdateMangaInfo = function UpdateMangaInfo() {
@@ -101,7 +108,7 @@ CMREADER.UpdateMangaInfo = function UpdateMangaInfo() {
 		lastUpdatedAt: Date.now()
 	};
 
-	self.port.emit("UpdateMangaInfo", mangaData);
+	CMREADER.SendMessage("UpdateMangaInfo", mangaData);
 };
 
 CMREADER.SetCurrentChapter = function SetCurrentChapter() {
@@ -112,7 +119,7 @@ CMREADER.SetCurrentChapter = function SetCurrentChapter() {
 		bRead: (CMREADER.options.chapterName == CMREADER.options.chapterNames[CMREADER.options.chapterNames.length - 1])
 	};
 
-	self.port.emit("UpdateMangaInfo", mangaData);
+	CMREADER.SendMessage("UpdateMangaInfo", mangaData);
 };
 
 CMREADER.RemoveFromList = function RemoveFromList() {
@@ -121,7 +128,7 @@ CMREADER.RemoveFromList = function RemoveFromList() {
 		site: CMREADER.options.siteName
 	};
 
-	self.port.emit("RemoveFromList", mangaData);
+	CMREADER.SendMessage("RemoveFromList", mangaData);
 };
 
 CMREADER.GoHome = function GoHome() {
@@ -190,7 +197,7 @@ CMREADER.GoToChapter = function GoToChapter(number) {
 };
 
 CMREADER.CheckSubscription = function CheckSubscription() {
-	self.port.emit("CheckSubscription", {
+	CMREADER.SendMessage("CheckSubscription", {
 		name: CMREADER.options.mangaName,
 		site: CMREADER.options.siteName,
 		atChapter: CMREADER.options.chapterName
@@ -525,6 +532,21 @@ CMREADER.Main = function Main() {
 	}
 };
 
+CMREADER.ListenMessages = function ListenMessages(message){
+	console.debug("ACMR (reader): Received a message");
+	console.debug(message);
+	switch (message.type) {
+		// From main_panel
+		case "ChangeInfiniteScrolling":
+			CMREADER.ChangeInfiniteScrolling(message.parameter);
+			break;
+		case "WorkerUpdateSubscribed":
+			CMREADER.ChangeShowPageNumber(message.parameter);
+			break;
+	}
+}
+
 //self.port.on("StartMain", CMREADER.Main);
-self.port.on("ChangeInfiniteScrolling", CMREADER.ChangeInfiniteScrolling);
-self.port.on("ChangeShowPageNumber", CMREADER.ChangeShowPageNumber);
+//self.port.on("ChangeInfiniteScrolling", CMREADER.ChangeInfiniteScrolling);
+//self.port.on("ChangeShowPageNumber", CMREADER.ChangeShowPageNumber);
+browser.runtime.onMessage.addListener(CMREADER.ListenMessages);

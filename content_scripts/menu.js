@@ -2,6 +2,13 @@ if (typeof CMMENU == 'undefined' || CMMENU == null) {
 	CMMENU = {};
 };
 
+CMMENU.SendMessage = function SendMessage(messageType, messageParameter){
+	browser.runtime.sendMessage({
+		"type": messageType,
+		"parameter": messageParameter}
+	);
+}
+
 /* Receives an array with numbers and populates the select box at the menu */
 CMMENU.SetChapterList = function SetChapterList(chapterList, currentChapter) {
 	var selectBox = document.getElementById("CMangaSelect");
@@ -307,6 +314,25 @@ CMMENU.CreateMenu = function CreateMenu() {
 
 	document.body.appendChild(CMMENU.topMenu);
 };
+
+CMMENU.ListenMessages = function ListenMessages(message){
+	console.debug("ACMR (menu): Received a message");
+	console.debug(message);
+	switch (message.type) {
+		case "SendPMOsFromMainToMenu":
+			CMMENU.modOpt = message.parameter;
+			break;
+		case "IsSubscribed":
+			CMMENU.IsSubscribed(message.parameter);
+			break;
+		case "WorkerUpdateSubscribed":
+			CMMENU.WorkerUpdateSubscribed(message.parameter);
+			break;
+		case "ChangeInfiniteScrolling":
+			CMREADER.ChangeInfiniteScrolling(message.parameter);
+			break;
+	}
+}
 
 CMMENU.Main = function Main(bFirstTime) {
 	CMMENU.options = {
