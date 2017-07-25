@@ -33,6 +33,11 @@
 		"alarms"
 	],
 
+	"web_accessible_resources": [
+		"data/img/*.png",
+		"data/img/*.gif"
+	],
+
 	"content_scripts":[
 		{
 			"matches": ["*://*.bato.to/*"],
