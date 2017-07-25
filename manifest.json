@@ -60,7 +60,7 @@
 			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/mangareader.css"]
 		},
 		{
-			"matches": ["*://*.mangastream.com/*"],
+			"matches": ["*://*.readms.net/*"],
 			"js": ["browser-polyfill.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/mangastream.js"],
 			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/mangastream.css"]
 		},

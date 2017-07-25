@@ -203,4 +203,4 @@ CMREADER.GetChapterURL = function GetChapterURL() {
 	}
 };*/
 
-self.port.on("StartMain", CMREADER.Main);
+CMREADER.Main();
