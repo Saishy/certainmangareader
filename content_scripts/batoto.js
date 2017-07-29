@@ -305,4 +305,4 @@ CMREADER.Main = function Main() {
 	}
 };
 
-self.port.on("StartMain", CMREADER.Main);
+CMREADER.Main();
