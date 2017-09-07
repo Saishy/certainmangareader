@@ -557,7 +557,7 @@ CMREADER.Main = function Main() {
 
 CMREADER.ListenMessages = function ListenMessages(message){
 	console.debug("ACMR (reader): Received a message");
-	console.debug(message);
+	console.debug(message.type);
 	switch (message.type) {
 		case "ChangeInfiniteScrolling":
 			CMREADER.ChangeInfiniteScrolling(message.parameter);

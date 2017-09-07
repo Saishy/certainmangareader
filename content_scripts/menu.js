@@ -340,7 +340,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 
 CMMENU.ListenMessages = function ListenMessages(message){
 	console.debug("ACMR (menu): Received a message");
-	console.debug(message);
+	console.debug(message.type);
 	switch (message.type) {
 		case "IsSubscribed":
 			CMMENU.IsSubscribed(message.parameter);
