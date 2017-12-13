@@ -1,28 +1,6 @@
 if (typeof CMMENU == 'undefined' || CMMENU == null) {
-	CMMENU = {};
-	CMMENU.modOpt = {
-		"addStar": browser.extension.getURL("data/img/add-star-24.png"),
-		"removeStar": browser.extension.getURL("data/img/remove-star-24.png"),
-		"home": browser.extension.getURL("data/img/home-24.png"),
-		"back": browser.extension.getURL("data/img/back-24.png"),
-		"next": browser.extension.getURL("data/img/next-24.png"),
-		"flag": browser.extension.getURL("data/img/flag-24.png"),
-		"single": browser.extension.getURL("data/img/single-24.png"),
-		"double": browser.extension.getURL("data/img/double-24.png"),
-		"loadingIcon": browser.extension.getURL("data/img/circle-loading.gif"),
-		"batoto": browser.extension.getURL("data/img/icon-batoto.png"),
-		"mangafox": browser.extension.getURL("data/img/icon-mangafox.png"),
-		"mangastream": browser.extension.getURL("data/img/icon-mangastream.png"),
-		"mangareader": browser.extension.getURL("data/img/icon-mangareader.png"),
-		"mangahere": browser.extension.getURL("data/img/icon-mangahere.png"),
-		"readmangatoday": browser.extension.getURL("data/img/icon-readmangatoday.png"),
-		"gear": browser.extension.getURL("data/img/gear-16.png"),
-		"play": browser.extension.getURL("data/img/play-16.png"),
-		"remove": browser.extension.getURL("data/img/remove-16.png"),
-		"mark": browser.extension.getURL("data/img/mark-16.png"),
-		"mangastreamCover": browser.extension.getURL("data/img/mangastream-cover.png"),
-		"error404": browser.extension.getURL("data/img/error404.png")
-	};
+	var CMMENU = {};
+	CMMENU.filesRef = filesRef;
 };
 
 CMMENU.SendMessage = function SendMessage(messageType, messageParameter){
@@ -219,7 +197,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 	newDiv.id = "CMangaAdd";
 
 	var newImg = document.createElement('img');
-	newImg.src = CMMENU.modOpt.addStar;
+	newImg.src = CMMENU.filesRef.addStar;
 	newImg.setAttribute("title", "Add this manga to your list");
 	newDiv.appendChild(newImg);
 
@@ -231,7 +209,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 	newDiv.id = "CMangaRemove";
 
 	newImg = document.createElement('img');
-	newImg.src = CMMENU.modOpt.removeStar;
+	newImg.src = CMMENU.filesRef.removeStar;
 	newImg.setAttribute("title", "Remove this manga from your list");
 	newDiv.appendChild(newImg);
 
@@ -247,7 +225,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 	newDiv.appendChild(newDiv2);
 
 	newImg = document.createElement('img');
-	newImg.src = CMMENU.modOpt.home;
+	newImg.src = CMMENU.filesRef.home;
 	newImg.setAttribute("title", "Go to the manga's main page");
 	newDiv2.appendChild(newImg);
 
@@ -259,7 +237,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 	newDiv.id = "CMangaBack";
 
 	newImg = document.createElement('img');
-	newImg.src = CMMENU.modOpt.back;
+	newImg.src = CMMENU.filesRef.back;
 	newImg.setAttribute("title", "Go to the previous chapter");
 	newDiv.appendChild(newImg);
 
@@ -279,7 +257,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 	newDiv.id = "CMangaNext";
 
 	newImg = document.createElement('img');
-	newImg.src = CMMENU.modOpt.next;
+	newImg.src = CMMENU.filesRef.next;
 	newImg.setAttribute("title", "Go to the next chapter");
 	newDiv.appendChild(newImg);
 
@@ -291,7 +269,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 	newDiv.id = "CMangaFlag";
 
 	newImg = document.createElement('img');
-	newImg.src = CMMENU.modOpt.flag;
+	newImg.src = CMMENU.filesRef.flag;
 	newImg.setAttribute("title", "Mark current chapter as latest read");
 	newDiv.appendChild(newImg);
 
@@ -305,27 +283,27 @@ CMMENU.CreateMenu = function CreateMenu() {
 
 	newImg = document.createElement('img');
 	newImg.className = "Single";
-	newImg.src = CMMENU.modOpt.single;
+	newImg.src = CMMENU.filesRef.single;
 	newImg.setAttribute("title", "View two pages side-by-side");
 	newDiv.appendChild(newImg);
 
 	newImg = document.createElement('img');
 	newImg.className = "Double";
-	newImg.src = CMMENU.modOpt.double;
+	newImg.src = CMMENU.filesRef.double;
 	newImg.setAttribute("title", "View page per page in a vertical list");
 	newDiv.appendChild(newImg);
 
 	CMMENU.topMenu.appendChild(newDiv);
 
 	/*var topMenu =
-		'<div id="CMangaAdd"><img src="' + CMMENU.modOpt.addStar + '" title="Add this manga to your list"></div>' +
-		'<div id="CMangaRemove"><img src="' + CMMENU.modOpt.removeStar + '" title="Remove this manga from your list"></div>' +
-		'<div id="CMangaHome"><a id="CMangaHomeLink"><img src="' + CMMENU.modOpt.home + '" title="Go to the manga\'s main page"></a></div>' +
-		'<div id="CMangaBack"><img src="' + CMMENU.modOpt.back + '" title="Go to the previous chapter"></div>' +
+		'<div id="CMangaAdd"><img src="' + CMMENU.filesRef.addStar + '" title="Add this manga to your list"></div>' +
+		'<div id="CMangaRemove"><img src="' + CMMENU.filesRef.removeStar + '" title="Remove this manga from your list"></div>' +
+		'<div id="CMangaHome"><a id="CMangaHomeLink"><img src="' + CMMENU.filesRef.home + '" title="Go to the manga\'s main page"></a></div>' +
+		'<div id="CMangaBack"><img src="' + CMMENU.filesRef.back + '" title="Go to the previous chapter"></div>' +
 		'<select id="CMangaSelect" name="CMangaChapters"></select>' +
-		'<div id="CMangaNext"><img src="' + CMMENU.modOpt.next + '" title="Go to the next chapter"></div>' +
-		'<div id="CMangaFlag"><img src="' + CMMENU.modOpt.flag + '" title="Mark currently chapter as lastest read"></div>' +
-		'<div id="CMangaView" class="Single"><img class="Single" src="' + CMMENU.modOpt.single + '" title="View two pages side-by-side"><img class="Double" src="' + CMMENU.modOpt.double + '" title="View page per page in a vertical list"></div>';
+		'<div id="CMangaNext"><img src="' + CMMENU.filesRef.next + '" title="Go to the next chapter"></div>' +
+		'<div id="CMangaFlag"><img src="' + CMMENU.filesRef.flag + '" title="Mark currently chapter as lastest read"></div>' +
+		'<div id="CMangaView" class="Single"><img class="Single" src="' + CMMENU.filesRef.single + '" title="View two pages side-by-side"><img class="Double" src="' + CMMENU.filesRef.double + '" title="View page per page in a vertical list"></div>';
 	*/
 
 	/*var newDiv = document.createElement('div');

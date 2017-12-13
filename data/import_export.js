@@ -1,6 +1,6 @@
 if (typeof CMIE == 'undefined' || CMIE == null) {
-	CMIE = {};
-};
+	var CMIE = {};
+}
 
 CMIE.SendMessage = function SendMessage(messageType, messageParameter){
 	browser.runtime.sendMessage({

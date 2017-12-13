@@ -1,5 +1,5 @@
 if (typeof CMREADER == 'undefined' || CMREADER == null) {
-	CMREADER = {};
+	var CMREADER = {};
 	CMREADER.options = {};
 }
 CMREADER.options.siteName = "Readmangatoday";

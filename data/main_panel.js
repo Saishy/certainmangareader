@@ -1,7 +1,7 @@
 if (typeof CMMP == 'undefined' || CMMP == null) {
-	CMMP = {};
+	var CMMP = {};
 	CMMP.options = {};
-	CMMP.modOpt = {};
+	CMMP.filesRef = {};
 }
 
 CMMP.SendMessage = function SendMessage(messageType, messageParameter){
@@ -9,7 +9,7 @@ CMMP.SendMessage = function SendMessage(messageType, messageParameter){
 		"type": messageType,
 		"parameter": messageParameter}
 	);
-}
+};
 
 /**
  * @return {string}
@@ -130,7 +130,7 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 
 	tempElem = document.createElement('div');
 	tempElem.className = 'CMangaCover';
-	var mangaCoverSrc = mangaData.coverSrc === 'null' ? CMMP.modOpt[mangaData.site.toLowerCase() + "Cover"] : mangaData.coverSrc;
+	var mangaCoverSrc = mangaData.coverSrc === 'null' ? CMMP.filesRef[mangaData.site.toLowerCase() + "Cover"] : mangaData.coverSrc;
 	tempElem.style.backgroundImage = 'url("' + mangaCoverSrc + '")';
 
 	mangaDiv.appendChild(tempElem);
@@ -192,13 +192,13 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 
 	tempElem = document.createElement('img');
 	tempElem.className = 'CMangaReadChapter';
-	tempElem.src = CMMP.modOpt.play;
+	tempElem.src = CMMP.filesRef.play;
 	tempElem.setAttribute("title", "Start reading");
 	lineDiv.appendChild(tempElem);
 
 	tempElem = document.createElement('img');
 	tempElem.className = 'CMangaMarkAsRead';
-	tempElem.src = CMMP.modOpt.mark;
+	tempElem.src = CMMP.filesRef.mark;
 	tempElem.setAttribute("title", "Mark it as read");
 	tempElem.dataset.mangaName = mangaData.name;
 	tempElem.dataset.mangaSite = mangaData.site;
@@ -206,7 +206,7 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 
 	tempElem = document.createElement('img');
 	tempElem.className = 'CMangaRemove';
-	tempElem.src = CMMP.modOpt.remove;
+	tempElem.src = CMMP.filesRef.remove;
 	tempElem.setAttribute("title", "Remove from list");
 	tempElem.dataset.mangaName = mangaData.name;
 	tempElem.dataset.mangaSite = mangaData.site;
@@ -219,7 +219,7 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 	lineDiv.appendChild(tempElem);
 
 	tempElem = document.createElement('img');
-	tempElem.src = CMMP.modOpt[mangaData.site.toLowerCase()];
+	tempElem.src = CMMP.filesRef[mangaData.site.toLowerCase()];
 	tempElem.className = 'CMangaSiteIcon Icon-' + mangaData.site;
 	tempElem.setAttribute("title", mangaData.site);
 	lineDiv.appendChild(tempElem);
@@ -573,8 +573,8 @@ CMMP.SetInitialConfig = function SetInitialConfig(options) {
 };
 
 CMMP.UdapteLastUpdatedAt = function UdapteLastUpdatedAt() {
-	var divs = document.getElementsByClassName('CMangaLastUpdateTime');
-	var count = divs.length;
+	let divs = document.getElementsByClassName('CMangaLastUpdateTime');
+	let count = divs.length;
 
 	while(count--) {
 		divs[count].textContent = "Last updated " + CMMP.TimeSince(divs[count].dataset.lastUpdatedAt) + ' ago';
@@ -613,8 +613,6 @@ CMMP.Hide = function Hide() {
 	}
 };
 
-
-
 CMMP.ListenMessages = function ListenMessages(message){
 	console.log("ACMR (panel): Received a message");
 	console.log(message)
@@ -622,12 +620,6 @@ CMMP.ListenMessages = function ListenMessages(message){
 		case "SendDataFromMain":
 			CMMP.PrepareLayout(message.parameter);
 			CMMP.SetInitialConfig(message.parameter);
-			break;
-		case "SendPMOsFromMain":
-			CMMP.modOpt = message.parameter;
-			break;
-		case "UdapteAddManga":
-			CMMP.UdapteAddManga(message.parameter);
 			break;
 		case "ReceiveAddonStatus":
 			CMMP.ReceiveAddonStatus(message.parameter);
@@ -637,9 +629,6 @@ CMMP.ListenMessages = function ListenMessages(message){
 			break;
 		case "UdapteRemoveManga":
 			CMMP.UdapteRemoveManga(message.parameter);
-			break;
-		case "ReceiveAddonStatus":
-			CMMP.ReceiveAddonStatus(message.parameter);
 			break;
 		case "ReceiveDesign":
 			CMMP.ReceiveDesign(message.parameter);
@@ -669,9 +658,11 @@ CMMP.ListenMessages = function ListenMessages(message){
 			console.log("hello!");
 			break;
 	}
-}
+};
 
 CMMP.Main = function Main() {
+	console.log("CMMP::Main Started main panel js!");
+
 	browser.runtime.onMessage.addListener(CMMP.ListenMessages);
 
 	CMMP.SendMessage("GetPMOsFromMain");
@@ -696,5 +687,6 @@ CMMP.Main = function Main() {
 	self.port.on("Show", CMMP.Show);
 	self.port.on("Hide", CMMP.Hide);
 	*/
-}
+};
+
 CMMP.Main();
