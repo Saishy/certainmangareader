@@ -1,5 +1,5 @@
 if (typeof CMREADER == 'undefined' || CMREADER == null) {
-	CMREADER = {};
+	var CMREADER = {};
 	CMREADER.options = {};
 }
 CMREADER.options.siteName = "Mangastream";
@@ -203,4 +203,4 @@ CMREADER.GetChapterURL = function GetChapterURL() {
 	}
 };*/
 
-self.port.on("StartMain", CMREADER.Main);
+CMREADER.Main();

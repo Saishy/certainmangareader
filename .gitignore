@@ -2,3 +2,5 @@
 *.xpi
 *.backup
 .jpmignore
+export.json
+/web-ext-artifacts

@@ -1,6 +1,7 @@
 if (typeof CMREADER == 'undefined' || CMREADER == null) {
-	CMREADER = {};
+	var CMREADER = {};
 	CMREADER.options = {};
+	CMREADER.filesRef = filesRef;
 }
 CMREADER.options.siteName = "CMREADER";
 /** If true, will reload after a location.assign() */
@@ -9,6 +10,13 @@ CMREADER.options.bShouldReload = false;
 CMREADER.StripImageFromDOM = false;
 
 CMREADER.LoadImageAtPage = false;
+
+CMREADER.SendMessage = function SendMessage(messageType, messageParameter){
+	browser.runtime.sendMessage({
+		"type": messageType,
+		"parameter": messageParameter}
+	);
+}
 
 CMREADER.LoadAllImages = function LoadAllImages() {
 	CMREADER.SetChapterButtons();
@@ -90,7 +98,7 @@ CMREADER.AddToList = function AddToList() {
 		lastUpdatedAt: Date.now()
 	};
 
-	self.port.emit("AddToList", mangaData);
+	CMREADER.SendMessage("AddToList", mangaData);
 };
 
 CMREADER.UpdateMangaInfo = function UpdateMangaInfo() {
@@ -101,7 +109,7 @@ CMREADER.UpdateMangaInfo = function UpdateMangaInfo() {
 		lastUpdatedAt: Date.now()
 	};
 
-	self.port.emit("UpdateMangaInfo", mangaData);
+	CMREADER.SendMessage("UpdateMangaInfo", mangaData);
 };
 
 CMREADER.SetCurrentChapter = function SetCurrentChapter() {
@@ -112,7 +120,7 @@ CMREADER.SetCurrentChapter = function SetCurrentChapter() {
 		bRead: (CMREADER.options.chapterName == CMREADER.options.chapterNames[CMREADER.options.chapterNames.length - 1])
 	};
 
-	self.port.emit("UpdateMangaInfo", mangaData);
+	CMREADER.SendMessage("UpdateMangaInfo", mangaData);
 };
 
 CMREADER.RemoveFromList = function RemoveFromList() {
@@ -121,7 +129,7 @@ CMREADER.RemoveFromList = function RemoveFromList() {
 		site: CMREADER.options.siteName
 	};
 
-	self.port.emit("RemoveFromList", mangaData);
+	CMREADER.SendMessage("RemoveFromList", mangaData);
 };
 
 CMREADER.GoHome = function GoHome() {
@@ -190,7 +198,7 @@ CMREADER.GoToChapter = function GoToChapter(number) {
 };
 
 CMREADER.CheckSubscription = function CheckSubscription() {
-	self.port.emit("CheckSubscription", {
+	CMREADER.SendMessage("CheckSubscription", {
 		name: CMREADER.options.mangaName,
 		site: CMREADER.options.siteName,
 		atChapter: CMREADER.options.chapterName
@@ -388,8 +396,8 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 		newDiv = document.createElement('div');
 		newDiv.id = "page" + (i + 1);
 		newDiv.className = "mangaPage";
-		//newDiv.style.backgroundImage = "url('" + self.options.loadingIcon + "')";
-		newDiv.style.background = "url('" + self.options.loadingIcon + "') center no-repeat";
+		//newDiv.style.backgroundImage = "url('" + CMMENU.filesRef.loadingIcon + "')";
+		newDiv.style.background = "url('" + CMMENU.filesRef.loadingIcon + "') center no-repeat";
 		//newDiv.style.width = "100%";
 		//newDiv.style.minHeight = "600px";
 
@@ -456,7 +464,7 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 	wrapper.appendChild(chapterButtonsDiv);
 	//<div style="width: 100%;" id="CMRChaptersButtons"><div id="CMRPreviousChapter">Previous Chapter</div><div id="CMRNextChapter">Next Chapter</div></div>
 
-	/*if (!self.options.bInfiniteScrolling) {
+	/*if (!CMMENU.filesRef.bInfiniteScrolling) {
 		wrapper.classList.add("CMangaPagePerPage");
 		CMREADER.SetActivePage(0);
 	}*/
@@ -525,6 +533,17 @@ CMREADER.Main = function Main() {
 	}
 };
 
-//self.port.on("StartMain", CMREADER.Main);
-self.port.on("ChangeInfiniteScrolling", CMREADER.ChangeInfiniteScrolling);
-self.port.on("ChangeShowPageNumber", CMREADER.ChangeShowPageNumber);
+CMREADER.ListenMessages = function ListenMessages(message){
+	console.debug("ACMR (reader): Received a message");
+	console.debug(message.type);
+	switch (message.type) {
+		case "ChangeInfiniteScrolling":
+			CMREADER.ChangeInfiniteScrolling(message.parameter);
+			break;
+		case "WorkerUpdateSubscribed":
+			CMREADER.ChangeShowPageNumber(message.parameter);
+			break;
+	}
+}
+
+browser.runtime.onMessage.addListener(CMREADER.ListenMessages);

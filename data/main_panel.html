@@ -1,7 +1,8 @@
 <html>
 <head>
+	<meta charset="utf-8">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,500italic,300,400italic,700' rel='stylesheet' type='text/css'>
-	<!--<link href="main_panel.css" rel='stylesheet' type='text/css'>-->
+	<link href="main_panel.css" rel='stylesheet' type='text/css'>
 </head>
 <body>
 	<div id="CMangaMainPanel">
@@ -30,14 +31,14 @@
 			<label class="CMangaSelectLabel" for="CMangaUpdateTime">Update every: </label>
 			<select id="CMangaUpdateTime">
 				<option value="-1">Never</option>
-				<option value="3600000">1 Hour</option>
-				<option value="7200000">2 Hours</option>
-				<option value="14400000">4 Hours</option>
-				<option value="28800000">8 Hours</option>
-				<option value="43200000">12 Hours</option>
-				<option value="86400000">24 Hours</option>
-				<option value="259200000">3 Days</option>
-				<option value="604800000">7 Days</option>
+				<option value="60">1 Hour</option>
+				<option value="120">2 Hours</option>
+				<option value="240">4 Hours</option>
+				<option value="480">8 Hours</option>
+				<option value="720">12 Hours</option>
+				<option value="1440">24 Hours</option>
+				<option value="4320">3 Days</option>
+				<option value="10080">7 Days</option>
 			</select>
 
 			<input type="checkbox" name="CMangaNetCheck" id="CMangaNetSave" class="css-checkbox"/>
@@ -46,11 +47,11 @@
 			<div id="CMangaMaxUpdateTimeContainer">
 				<label class="CMangaSelectLabel" for="CMangaMaxUpdateTime">Maximum Time: </label>
 				<select id="CMangaMaxUpdateTime">
-					<option value="86400000">24 Hours</option>
-					<option value="259200000">3 Days</option>
-					<option value="604800000">7 Days</option>
-					<option value="1209600000">14 Days</option>
-					<option value="2592000000">30 Days</option>
+					<option value="1440">24 Hours</option>
+					<option value="4320">3 Days</option>
+					<option value="10080">7 Days</option>
+					<option value="20160">14 Days</option>
+					<option value="43200">30 Days</option>
 				</select>
 			</div>
 
@@ -65,3 +66,5 @@
 	</div>
 </body>
 </html>
+<script src="../browser-polyfill.js"></script>
+<script src="main_panel.js"></script>

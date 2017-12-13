@@ -1,5 +1,5 @@
 if (typeof CMREADER == 'undefined' || CMREADER == null) {
-	CMREADER = {};
+	var CMREADER = {};
 	CMREADER.options = {};
 }
 CMREADER.options.siteName = "Readmangatoday";
@@ -265,4 +265,4 @@ CMREADER.GetChapterURL = function GetChapterURL() {
 	CMREADER.options.chapterURL = CMREADER.options.chapterURL.replace(/(\/\d*?)\/\d*?$/, '$1');
 };
 
-self.port.on("StartMain", CMREADER.Main);
+CMREADER.Main();

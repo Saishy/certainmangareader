@@ -1,5 +1,5 @@
 if (typeof CMREADER == 'undefined' || CMREADER == null) {
-	CMREADER = {};
+	var CMREADER = {};
 	CMREADER.options = {};
 }
 CMREADER.options.siteName = "Mangafox";
@@ -389,4 +389,6 @@ CMREADER.Main = function Main() {
 	}
 };
 
-self.port.on("StartMain", CMREADER.Main);
+//browser.runtime.onMessage.addListener("StartMain", CMREADER.Main);
+CMREADER.Main();
+

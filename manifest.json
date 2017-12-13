@@ -1,0 +1,75 @@
+{
+	"manifest_version": 2,
+	"name": "A Certain Manga Reader",
+	"version": "3.0.0-beta",
+
+	"description": "Read and receive notifications for your mangas with ease.",
+	"homepage_url": "https://github.com/saishy/certainmangareader",
+	"author": "Saishy (http://tinybirdgames.com/)",
+
+	"applications": {
+		"gecko": {
+			"id": "certainmangareader@saishy"
+		}
+	},
+
+	"icons": {
+		"64": "data/img/icon-64.png",
+		"32": "data/img/icon-32.png"
+	},
+
+	"background": {
+		"page": "lib/main.html"
+	},
+
+	"browser_action": {
+		"browser_style": false,
+		"default_icon": "data/img/icon-32.png",
+		"default_title": "A Certain Manga Reader",
+		"default_popup": "data/main_panel.html"
+	},
+
+	"permissions": [
+		"storage",
+		"alarms",
+		"unlimitedStorage"
+	],
+
+	"web_accessible_resources": [
+		"data/img/*.png",
+		"data/img/*.gif"
+	],
+
+	"content_scripts":[
+		{
+			"matches": ["*://*.bato.to/*"],
+			"js": ["browser-polyfill.js", "data/files_ref.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/batoto.js"],
+			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/batoto.css"]
+		},
+		{
+			"matches": ["*://*.mangafox.me/*"],
+			"js": ["browser-polyfill.js", "data/files_ref.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/mangafox.js"],
+			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/mangafox.css"]
+		},
+		{
+			"matches": ["*://*.mangahere.co/*"],
+			"js": ["browser-polyfill.js", "data/files_ref.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/mangahere.js"],
+			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/mangahere.css"]
+		},
+		{
+			"matches": ["*://*.mangareader.net/*"],
+			"js": ["browser-polyfill.js", "data/files_ref.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/mangareader.js"],
+			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/mangareader.css"]
+		},
+		{
+			"matches": ["*://*.readms.net/r/*"],
+			"js": ["browser-polyfill.js", "data/files_ref.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/mangastream.js"],
+			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/mangastream.css"]
+		},
+		{
+			"matches": ["*://*.readmng.com/*/*"],
+			"js": ["browser-polyfill.js", "data/files_ref.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/readmangatoday.js"],
+			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/readmangatoday.css"]
+		}
+	]
+}

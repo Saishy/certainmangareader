@@ -1,6 +1,14 @@
 if (typeof CMMENU == 'undefined' || CMMENU == null) {
-	CMMENU = {};
+	var CMMENU = {};
+	CMMENU.filesRef = filesRef;
 };
+
+CMMENU.SendMessage = function SendMessage(messageType, messageParameter){
+	browser.runtime.sendMessage({
+		"type": messageType,
+		"parameter": messageParameter}
+	);
+}
 
 /* Receives an array with numbers and populates the select box at the menu */
 CMMENU.SetChapterList = function SetChapterList(chapterList, currentChapter) {
@@ -189,7 +197,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 	newDiv.id = "CMangaAdd";
 
 	var newImg = document.createElement('img');
-	newImg.src = self.options.addStar;
+	newImg.src = CMMENU.filesRef.addStar;
 	newImg.setAttribute("title", "Add this manga to your list");
 	newDiv.appendChild(newImg);
 
@@ -201,7 +209,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 	newDiv.id = "CMangaRemove";
 
 	newImg = document.createElement('img');
-	newImg.src = self.options.removeStar;
+	newImg.src = CMMENU.filesRef.removeStar;
 	newImg.setAttribute("title", "Remove this manga from your list");
 	newDiv.appendChild(newImg);
 
@@ -217,7 +225,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 	newDiv.appendChild(newDiv2);
 
 	newImg = document.createElement('img');
-	newImg.src = self.options.home;
+	newImg.src = CMMENU.filesRef.home;
 	newImg.setAttribute("title", "Go to the manga's main page");
 	newDiv2.appendChild(newImg);
 
@@ -229,7 +237,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 	newDiv.id = "CMangaBack";
 
 	newImg = document.createElement('img');
-	newImg.src = self.options.back;
+	newImg.src = CMMENU.filesRef.back;
 	newImg.setAttribute("title", "Go to the previous chapter");
 	newDiv.appendChild(newImg);
 
@@ -249,7 +257,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 	newDiv.id = "CMangaNext";
 
 	newImg = document.createElement('img');
-	newImg.src = self.options.next;
+	newImg.src = CMMENU.filesRef.next;
 	newImg.setAttribute("title", "Go to the next chapter");
 	newDiv.appendChild(newImg);
 
@@ -261,7 +269,7 @@ CMMENU.CreateMenu = function CreateMenu() {
 	newDiv.id = "CMangaFlag";
 
 	newImg = document.createElement('img');
-	newImg.src = self.options.flag;
+	newImg.src = CMMENU.filesRef.flag;
 	newImg.setAttribute("title", "Mark current chapter as latest read");
 	newDiv.appendChild(newImg);
 
@@ -275,27 +283,27 @@ CMMENU.CreateMenu = function CreateMenu() {
 
 	newImg = document.createElement('img');
 	newImg.className = "Single";
-	newImg.src = self.options.single;
+	newImg.src = CMMENU.filesRef.single;
 	newImg.setAttribute("title", "View two pages side-by-side");
 	newDiv.appendChild(newImg);
 
 	newImg = document.createElement('img');
 	newImg.className = "Double";
-	newImg.src = self.options.double;
+	newImg.src = CMMENU.filesRef.double;
 	newImg.setAttribute("title", "View page per page in a vertical list");
 	newDiv.appendChild(newImg);
 
 	CMMENU.topMenu.appendChild(newDiv);
 
 	/*var topMenu =
-		'<div id="CMangaAdd"><img src="' + self.options.addStar + '" title="Add this manga to your list"></div>' +
-		'<div id="CMangaRemove"><img src="' + self.options.removeStar + '" title="Remove this manga from your list"></div>' +
-		'<div id="CMangaHome"><a id="CMangaHomeLink"><img src="' + self.options.home + '" title="Go to the manga\'s main page"></a></div>' +
-		'<div id="CMangaBack"><img src="' + self.options.back + '" title="Go to the previous chapter"></div>' +
+		'<div id="CMangaAdd"><img src="' + CMMENU.filesRef.addStar + '" title="Add this manga to your list"></div>' +
+		'<div id="CMangaRemove"><img src="' + CMMENU.filesRef.removeStar + '" title="Remove this manga from your list"></div>' +
+		'<div id="CMangaHome"><a id="CMangaHomeLink"><img src="' + CMMENU.filesRef.home + '" title="Go to the manga\'s main page"></a></div>' +
+		'<div id="CMangaBack"><img src="' + CMMENU.filesRef.back + '" title="Go to the previous chapter"></div>' +
 		'<select id="CMangaSelect" name="CMangaChapters"></select>' +
-		'<div id="CMangaNext"><img src="' + self.options.next + '" title="Go to the next chapter"></div>' +
-		'<div id="CMangaFlag"><img src="' + self.options.flag + '" title="Mark currently chapter as lastest read"></div>' +
-		'<div id="CMangaView" class="Single"><img class="Single" src="' + self.options.single + '" title="View two pages side-by-side"><img class="Double" src="' + self.options.double + '" title="View page per page in a vertical list"></div>';
+		'<div id="CMangaNext"><img src="' + CMMENU.filesRef.next + '" title="Go to the next chapter"></div>' +
+		'<div id="CMangaFlag"><img src="' + CMMENU.filesRef.flag + '" title="Mark currently chapter as lastest read"></div>' +
+		'<div id="CMangaView" class="Single"><img class="Single" src="' + CMMENU.filesRef.single + '" title="View two pages side-by-side"><img class="Double" src="' + CMMENU.filesRef.double + '" title="View page per page in a vertical list"></div>';
 	*/
 
 	/*var newDiv = document.createElement('div');
@@ -308,17 +316,30 @@ CMMENU.CreateMenu = function CreateMenu() {
 	document.body.appendChild(CMMENU.topMenu);
 };
 
+CMMENU.ListenMessages = function ListenMessages(message){
+	console.debug("ACMR (menu): Received a message");
+	console.debug(message.type);
+	switch (message.type) {
+		case "IsSubscribed":
+			CMMENU.IsSubscribed(message.parameter);
+			break;
+		case "WorkerUpdateSubscribed":
+			CMMENU.WorkerUpdateSubscribed(message.parameter);
+			break;
+		case "ChangeInfiniteScrolling":
+			CMREADER.ChangeInfiniteScrolling(message.parameter);
+			break;
+	}
+}
+
 CMMENU.Main = function Main(bFirstTime) {
+	browser.runtime.onMessage.addListener(CMMENU.ListenMessages);
+
 	CMMENU.options = {
 		bFirstTime: bFirstTime
 	};
 
 	CMMENU.CreateMenu();
-
-	self.port.on("IsSubscribed", CMMENU.IsSubscribed);
-	self.port.on("WorkerUpdateSubscribed", CMMENU.WorkerUpdateSubscribed);
-	self.port.on("ChangeInfiniteScrolling", CMREADER.ChangeInfiniteScrolling);
 };
 
-self.port.on("StartMain", CMMENU.Main);
-//CMMENU.Main();
+CMMENU.Main();
