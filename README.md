@@ -19,10 +19,10 @@ provides several features to improve your reading experience.
 ### 3.0 (upcoming)
 - Ported to WebExtension format, compatible with Firefox 57+
 
-### 2.3.2 (stable)
+### 2.3.2 (stable | beta)
 - Added more mangafox servers to image loading
 
-### 2.3.0 (beta)
+### 2.3.0
 - Fixed mangastream reading
 - Updates should be more reliable
 
