@@ -1,7 +1,7 @@
 if (typeof CMMP == 'undefined' || CMMP == null) {
 	var CMMP = {};
 	CMMP.options = {};
-	CMMP.filesRef = {};
+	CMMP.filesRef = filesRef;
 }
 
 CMMP.SendMessage = function SendMessage(messageType, messageParameter){
@@ -53,6 +53,7 @@ CMMP.TimeSince = function TimeSince(date) {
 };
 
 // What is Udapte? A miserable pile of typos.
+// Update for the panel DOM
 
 CMMP.UdapteUpdateManga = function UdapteUpdateManga(mangaData) {
 	CMMP.UdapteUpdateMangaElement(mangaData);

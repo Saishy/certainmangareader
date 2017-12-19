@@ -32,7 +32,8 @@
 	"permissions": [
 		"storage",
 		"alarms",
-		"unlimitedStorage"
+		"unlimitedStorage",
+		"notifications"
 	],
 
 	"web_accessible_resources": [

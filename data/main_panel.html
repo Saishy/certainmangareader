@@ -1,70 +1,71 @@
 <html>
-<head>
-	<meta charset="utf-8">
-	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,500italic,300,400italic,700' rel='stylesheet' type='text/css'>
-	<link href="main_panel.css" rel='stylesheet' type='text/css'>
-</head>
-<body>
-	<div id="CMangaMainPanel">
-		<div id="CMangaIcon"></div>
-		<div id="CMangaAddonName"><span id="easteregg">A</span> Certain Manga Reader</div>
-		<div class="onoffswitch CMangaMPSwitch">
-			<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="CMangaSwitch" checked>
-			<label class="onoffswitch-label" for="CMangaSwitch">
-				<span class="onoffswitch-inner"></span>
-				<span class="onoffswitch-switch"></span>
-			</label>
-		</div>
-		<div id="CMangaSettings"><img title="Settings" src="img/gear-16.png"></div>
-		<div id="CMangaSettingsMenu" class="hidden">
-			<div class="CMangaCheckBoxDiv">
-				<input type="checkbox" name="CMangaNotificationCheck" id="CMangaNotifications" class="css-checkbox"/>
-				<label for="CMangaNotifications" class="css-label">Display Notifications</label>
-				<input type="checkbox" name="CMangaCompactCheck" id="CMangaCompact" class="css-checkbox"/>
-				<label for="CMangaCompact" class="css-label">Compact Design</label>
-				<input type="checkbox" name="CMangaPageMarkCheck" id="CMangaPageCheck" class="css-checkbox"/>
-				<label for="CMangaPageCheck" class="css-label">Show Page Numbers</label>
-				<input type="checkbox" name="CMangaInfiniteCheck" id="CMangaInfinite" class="css-checkbox"/>
-				<label for="CMangaInfinite" class="css-label">Infinite Scrolling</label>
+	<head>
+		<meta charset="utf-8">
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,500italic,300,400italic,700' rel='stylesheet' type='text/css'>
+		<link href="main_panel.css" rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+		<div id="CMangaMainPanel">
+			<div id="CMangaIcon"></div>
+			<div id="CMangaAddonName"><span id="easteregg">A</span> Certain Manga Reader</div>
+			<div class="onoffswitch CMangaMPSwitch">
+				<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="CMangaSwitch" checked>
+				<label class="onoffswitch-label" for="CMangaSwitch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label>
 			</div>
+			<div id="CMangaSettings"><img title="Settings" src="img/gear-16.png"></div>
+			<div id="CMangaSettingsMenu" class="hidden">
+				<div class="CMangaCheckBoxDiv">
+					<input type="checkbox" name="CMangaNotificationCheck" id="CMangaNotifications" class="css-checkbox"/>
+					<label for="CMangaNotifications" class="css-label">Display Notifications</label>
+					<input type="checkbox" name="CMangaCompactCheck" id="CMangaCompact" class="css-checkbox"/>
+					<label for="CMangaCompact" class="css-label">Compact Design</label>
+					<input type="checkbox" name="CMangaPageMarkCheck" id="CMangaPageCheck" class="css-checkbox"/>
+					<label for="CMangaPageCheck" class="css-label">Show Page Numbers</label>
+					<input type="checkbox" name="CMangaInfiniteCheck" id="CMangaInfinite" class="css-checkbox"/>
+					<label for="CMangaInfinite" class="css-label">Infinite Scrolling</label>
+				</div>
 
-			<label class="CMangaSelectLabel" for="CMangaUpdateTime">Update every: </label>
-			<select id="CMangaUpdateTime">
-				<option value="-1">Never</option>
-				<option value="60">1 Hour</option>
-				<option value="120">2 Hours</option>
-				<option value="240">4 Hours</option>
-				<option value="480">8 Hours</option>
-				<option value="720">12 Hours</option>
-				<option value="1440">24 Hours</option>
-				<option value="4320">3 Days</option>
-				<option value="10080">7 Days</option>
-			</select>
-
-			<input type="checkbox" name="CMangaNetCheck" id="CMangaNetSave" class="css-checkbox"/>
-			<label for="CMangaNetSave" class="css-label">Network Saving Mode</label>
-
-			<div id="CMangaMaxUpdateTimeContainer">
-				<label class="CMangaSelectLabel" for="CMangaMaxUpdateTime">Maximum Time: </label>
-				<select id="CMangaMaxUpdateTime">
+				<label class="CMangaSelectLabel" for="CMangaUpdateTime">Update every: </label>
+				<select id="CMangaUpdateTime">
+					<option value="-1">Never</option>
+					<option value="60">1 Hour</option>
+					<option value="120">2 Hours</option>
+					<option value="240">4 Hours</option>
+					<option value="480">8 Hours</option>
+					<option value="720">12 Hours</option>
 					<option value="1440">24 Hours</option>
 					<option value="4320">3 Days</option>
 					<option value="10080">7 Days</option>
-					<option value="20160">14 Days</option>
-					<option value="43200">30 Days</option>
 				</select>
-			</div>
 
-			<div id="CMangaActionButtons">
-				<div id="CMangaExportImport">Export/Import</div>
-				<div id="CMangaUpdateNow" class="ready"><span class="ready">Update now</span><span class="updating">Updating...</span></div>
+				<input type="checkbox" name="CMangaNetCheck" id="CMangaNetSave" class="css-checkbox"/>
+				<label for="CMangaNetSave" class="css-label">Network Saving Mode</label>
+
+				<div id="CMangaMaxUpdateTimeContainer">
+					<label class="CMangaSelectLabel" for="CMangaMaxUpdateTime">Maximum Time: </label>
+					<select id="CMangaMaxUpdateTime">
+						<option value="1440">24 Hours</option>
+						<option value="4320">3 Days</option>
+						<option value="10080">7 Days</option>
+						<option value="20160">14 Days</option>
+						<option value="43200">30 Days</option>
+					</select>
+				</div>
+
+				<div id="CMangaActionButtons">
+					<div id="CMangaExportImport">Export/Import</div>
+					<div id="CMangaUpdateNow" class="ready"><span class="ready">Update now</span><span class="updating">Updating...</span></div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div id="CMangaContainer">
-		<div id="CMangaViewLayout"></div>
-	</div>
-</body>
+		<div id="CMangaContainer">
+			<div id="CMangaViewLayout"></div>
+		</div>
+		<script type="application/javascript" src="../data/files_ref.js"></script>
+		<script src="../browser-polyfill.js"></script>
+		<script src="main_panel.js"></script>
+	</body>
 </html>
-<script src="../browser-polyfill.js"></script>
-<script src="main_panel.js"></script>
