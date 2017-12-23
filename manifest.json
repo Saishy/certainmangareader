@@ -33,7 +33,16 @@
 		"storage",
 		"alarms",
 		"unlimitedStorage",
-		"notifications"
+		"notifications",
+		"webRequest",
+		"webRequestBlocking",
+		// Manga sites
+		"*://*.bato.to/*",
+		"*://*.mangafox.me/*",
+		"*://*.mangahere.co/*",
+		"*://*.mangareader.net/*",
+		"*://*.readms.net/r/*",
+		"*://*.readmng.com/*"
 	],
 
 	"web_accessible_resources": [
@@ -68,7 +77,7 @@
 			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/mangastream.css"]
 		},
 		{
-			"matches": ["*://*.readmng.com/*/*"],
+			"matches": ["*://*.readmng.com/*/*/*"],
 			"js": ["browser-polyfill.js", "data/files_ref.js", "content_scripts/menu.js", "content_scripts/cmreader.js", "content_scripts/readmangatoday.js"],
 			"css": ["content_scripts/menu.css", "content_scripts/cmreader.css", "content_scripts/readmangatoday.css"]
 		}

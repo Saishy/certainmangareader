@@ -16,20 +16,18 @@ CMREADER.SendMessage = function SendMessage(messageType, messageParameter){
 		"type": messageType,
 		"parameter": messageParameter}
 	);
-}
+};
 
 CMREADER.LoadAllImages = function LoadAllImages() {
 	CMREADER.SetChapterButtons();
 
 	CMREADER.options.getRequests = [];
 
-	for(var x = 1; x < CMREADER.options.numberOfPages; x++) {
+	for(let x = 1; x < CMREADER.options.numberOfPages; x++) {
 		CMREADER.options.getRequests.push(x);
 	}
 
-	CMREADER.LoadImageAtPage(0);
-
-	return;
+	CMREADER.LoadImageAtPage(0); //Get requests start at 1, and the first one is called with 0 and not in the array
 };
 
 /*CMREADER.PageLoadEvent = function PageLoadEvent() {
@@ -62,7 +60,7 @@ CMREADER.LoadComplete = function LoadComplete() {
 };
 
 CMREADER.PageLoaded = function PageLoaded(pageNumber) {
-	var count = CMREADER.options.getRequests.length;
+	let count = CMREADER.options.getRequests.length;
 	while(count--) {
 		if (pageNumber == CMREADER.options.getRequests[count]) {
 			CMREADER.options.getRequests.splice(count, 1);
@@ -84,7 +82,7 @@ CMREADER.PageLoaded = function PageLoaded(pageNumber) {
 };
 
 CMREADER.AddToList = function AddToList() {
-	var mangaData = {
+	let mangaData = {
 		name: CMREADER.options.mangaName,
 		site: CMREADER.options.siteName,
 		mangaURL: CMREADER.options.mangaURL,
@@ -102,7 +100,7 @@ CMREADER.AddToList = function AddToList() {
 };
 
 CMREADER.UpdateMangaInfo = function UpdateMangaInfo() {
-	var mangaData = {
+	let mangaData = {
 		name: CMREADER.options.mangaName,
 		site: CMREADER.options.siteName,
 		chapters: CMREADER.options.chapters,
@@ -113,7 +111,7 @@ CMREADER.UpdateMangaInfo = function UpdateMangaInfo() {
 };
 
 CMREADER.SetCurrentChapter = function SetCurrentChapter() {
-	var mangaData = {
+	let mangaData = {
 		name: CMREADER.options.mangaName,
 		site: CMREADER.options.siteName,
 		atChapter: CMREADER.options.chapterName,
@@ -124,7 +122,7 @@ CMREADER.SetCurrentChapter = function SetCurrentChapter() {
 };
 
 CMREADER.RemoveFromList = function RemoveFromList() {
-	var mangaData = {
+	let mangaData = {
 		name: CMREADER.options.mangaName,
 		site: CMREADER.options.siteName
 	};
@@ -143,7 +141,7 @@ CMREADER.GetCurrentChapterNumberInArray = function GetCurrentChapterNumberInArra
 		return -1;
 	}
 
-	var count = CMREADER.options.chapters.length;
+	let count = CMREADER.options.chapters.length;
 	while(count--) {
 		if (CMREADER.options.chapters[count].name == CMREADER.options.chapterName) {
 			return count;
@@ -158,8 +156,8 @@ CMREADER.GoToChapter = function GoToChapter(number) {
 		return;
 	}
 
-	var dest = CMREADER.options.chapterURL;
-	var count;
+	let dest = CMREADER.options.chapterURL;
+	let count;
 
 	if (number == "back" || number == "next") {
 		count = CMREADER.options.chapters.length;
@@ -222,13 +220,13 @@ CMREADER.ResizeThrottler = function ResizeThrottler() {
 
 CMREADER.ActualResizeHandler = function ActualResizeHandler() {
 	// handle the resize event
-	var pages = document.getElementsByClassName("pageSet");
+	let pages = document.getElementsByClassName("pageSet");
 
-	var maxWidth = pages[0].offsetWidth;
+	let maxWidth = pages[0].offsetWidth;
 
-	var count = pages.length;
-	var imgs, x, size;
-	for(var i = 0; i < count; i++) {
+	let count = pages.length;
+	let imgs, x, size;
+	for(let i = 0; i < count; i++) {
 		size = 0;
 		imgs = pages[i].getElementsByTagName("img");
 		x = imgs.length;
@@ -247,13 +245,13 @@ CMREADER.ActualResizeHandler = function ActualResizeHandler() {
 };
 
 CMREADER.InvertView = function InvertView(bTwoColumn) {
-	var pages = document.getElementsByClassName("pageSet");
+	let pages = document.getElementsByClassName("pageSet");
 
-	var maxWidth = pages[0].offsetWidth;
+	let maxWidth = pages[0].offsetWidth;
 
-	var count = pages.length;
-	var imgs, x, size;
-	for(var i = 0; i < count; i++) {
+	let count = pages.length;
+	let imgs, x, size;
+	for(let i = 0; i < count; i++) {
 		if (bTwoColumn) {
 			pages[i].classList.add("twoColumn");
 		} else {
@@ -309,13 +307,13 @@ CMREADER.GoToNextPage = function() {
 CMREADER.SetActivePage = function SetActivePage(pageNumber) {
 	CMREADER.options.activePageNumber = pageNumber;
 
-	var elems = document.getElementsByClassName("CMangaPageActive");
-	var count = elems.length;
+	let elems = document.getElementsByClassName("CMangaPageActive");
+	let count = elems.length;
 	while(count--) {
 		elems[count].classList.remove("CMangaPageActive");
 	}
 
-	var page = document.getElementById("page" + (pageNumber + 1));
+	let page = document.getElementById("page" + (pageNumber + 1));
 	if (!page) {
 		return;
 	}
@@ -327,7 +325,7 @@ CMREADER.SetActivePage = function SetActivePage(pageNumber) {
 			container: document.createElement('div'),
 			back: document.createElement('div'),
 			next: document.createElement('div')
-		}
+		};
 
 		CMREADER.options.pageControls.container.id = "CMangaPageControls";
 
@@ -439,10 +437,10 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 		CMREADER.SetActivePage(0);
 	}
 
-	var chapterButtonsDiv = document.createElement('div');
+	let chapterButtonsDiv = document.createElement('div');
 	chapterButtonsDiv.id = "CMRChaptersButtons";
 
-	var previousChapterDiv = document.createElement('a');
+	let previousChapterDiv = document.createElement('a');
 	previousChapterDiv.id = "CMRPreviousChapter";
 	previousChapterDiv.textContent = "Previous Chapter";
 	previousChapterDiv.style.visibility = 'hidden';
@@ -450,7 +448,7 @@ CMREADER.PrepareLayoutPages = function PrepareLayoutPages(wrapper) {
 		CMREADER.GoToChapter("back");
 	};*/
 
-	var nextChapterDiv = document.createElement('a');
+	let nextChapterDiv = document.createElement('a');
 	nextChapterDiv.id = "CMRNextChapter";
 	nextChapterDiv.textContent = "Next Chapter";
 	nextChapterDiv.style.visibility = 'hidden';
@@ -487,12 +485,12 @@ CMREADER.SetChapterButtons = function SetChapterButtons() {
 		}
 
 		if (i < CMREADER.options.chapters.length - 1) {
-			var nextChapterTag = document.getElementById('CMRNextChapter');
+			let nextChapterTag = document.getElementById('CMRNextChapter');
 			nextChapterTag.style.visibility = 'visible';
 			nextChapterTag.setAttribute("href", CMREADER.options.chapters[i+1].url);
 		}
 		if (i > 0) {
-			var previousChapterTag = document.getElementById('CMRPreviousChapter');
+			let previousChapterTag = document.getElementById('CMRPreviousChapter');
 			previousChapterTag.style.visibility = 'visible';
 			previousChapterTag.setAttribute("href", CMREADER.options.chapters[i-1].url);
 		}

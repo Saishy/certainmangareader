@@ -1,7 +1,3 @@
-if (typeof CMREADER == 'undefined' || CMREADER == null) {
-	var CMREADER = {};
-	CMREADER.options = {};
-}
 CMREADER.options.siteName = "Mangafox";
 
 CMREADER.StripSecondImageFromDOM = function StripSecondImageFromDOM(DOMData) {

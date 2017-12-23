@@ -1,4 +1,5 @@
 var filesRef = {
+	"icon64": browser.extension.getURL('data/img/icon-64.png'),
 	"addStar": browser.extension.getURL("data/img/add-star-24.png"),
 	"removeStar": browser.extension.getURL("data/img/remove-star-24.png"),
 	"home": browser.extension.getURL("data/img/home-24.png"),
