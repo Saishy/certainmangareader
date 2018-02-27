@@ -1,21 +1,21 @@
 if (typeof CMMENU == 'undefined' || CMMENU == null) {
 	var CMMENU = {};
 	CMMENU.filesRef = filesRef;
-};
+}
 
 CMMENU.SendMessage = function SendMessage(messageType, messageParameter){
 	browser.runtime.sendMessage({
 		"type": messageType,
 		"parameter": messageParameter}
 	);
-}
+};
 
 /* Receives an array with numbers and populates the select box at the menu */
 CMMENU.SetChapterList = function SetChapterList(chapterList, currentChapter) {
-	var selectBox = document.getElementById("CMangaSelect");
+	let selectBox = document.getElementById("CMangaSelect");
 
-	var count = chapterList.length;
-	var opt;
+	let count = chapterList.length;
+	let opt;
 	while(count--) {
 		opt = document.createElement("option");
 
@@ -330,7 +330,7 @@ CMMENU.ListenMessages = function ListenMessages(message){
 			CMREADER.ChangeInfiniteScrolling(message.parameter);
 			break;
 	}
-}
+};
 
 CMMENU.Main = function Main(bFirstTime) {
 	browser.runtime.onMessage.addListener(CMMENU.ListenMessages);

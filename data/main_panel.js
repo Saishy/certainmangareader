@@ -106,7 +106,7 @@ CMMP.MarkAsRead = function MarkAsRead() {
 };
 
 CMMP.Remove = function Remove() {
-	var mangaData = {};
+	let mangaData = {};
 
 	mangaData.name = this.dataset.mangaName;
 	mangaData.site = this.dataset.mangaSite;
@@ -115,11 +115,9 @@ CMMP.Remove = function Remove() {
 };
 
 CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bReturn) {
-	var mangaNameId, originalDiv, bFullRead;
+	let mangaNameId, originalDiv, bFullRead;
 
-	var mangaDiv, lineDiv, tempElem, tempElem2, optionDiv;
-
-	var now = Date.now();
+	let mangaDiv, lineDiv, tempElem, tempElem2, optionDiv;
 
 	bFullRead = true;
 	mangaNameId = mangaData.name.replace(" ", "_") + mangaData.site;
@@ -131,7 +129,7 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 
 	tempElem = document.createElement('div');
 	tempElem.className = 'CMangaCover';
-	var mangaCoverSrc = mangaData.coverSrc === 'null' ? CMMP.filesRef[mangaData.site.toLowerCase() + "Cover"] : mangaData.coverSrc;
+	let mangaCoverSrc = mangaData.coverSrc === 'null' ? CMMP.filesRef[mangaData.site.toLowerCase() + "Cover"] : mangaData.coverSrc;
 	tempElem.style.backgroundImage = 'url("' + mangaCoverSrc + '")';
 
 	mangaDiv.appendChild(tempElem);
@@ -141,7 +139,7 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 
 	tempElem = document.createElement('div');
 	tempElem.className = 'CMangaName CMangaNameLink';
-	if (now - mangaData.lastUpdatedAt <= 10000) {
+	if (mangaData.bUpdated) {
 		tempElem.className += ' CMangaJustUpdated';
 	}
 	tempElem.textContent = mangaData.name;
@@ -175,8 +173,8 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 	tempElem.className = 'CMangaSelector';
 	tempElem.dataset.atChapter = mangaData.atChapter;
 
-	var countX = mangaData.chapters.length;
-	var maxLength = countX - 1;
+	let countX = mangaData.chapters.length;
+	let maxLength = countX - 1;
 	while(countX--) {
 		optionDiv = document.createElement('option');
 		optionDiv.value = mangaData.chapters[countX].url;
@@ -244,10 +242,10 @@ CMMP.UdapteUpdateMangaElement = function UdapteUpdateMangaElement(mangaData, bRe
 			//CMMP.options.mangaViewContainer.insertBefore(mangaDiv, CMMP.options.mangaViewContainer.firstChild);
 		}
 
-		var bAdded = false;
-		var count = 0;
-		var limit = CMMP.options.mangaViewContainer.children.length;
-		var lastIndexUnread = count;
+		let bAdded = false;
+		let count = 0;
+		let limit = CMMP.options.mangaViewContainer.children.length;
+		let lastIndexUnread = count;
 
 		if (bFullRead) {
 			while(count < limit && !CMMP.options.mangaViewContainer.children[count].classList.contains("fullRead")) {
@@ -334,13 +332,13 @@ CMMP.ReceiveMaxUpdateTime = function ReceiveMaxUpdateTime(status) {
 // USER CHANGED SETTINGS ===============================================================================================
 
 CMMP.AddonOnOff = function AddonOnOff() {
-	var temp = document.getElementById("CMangaSwitch").checked;
+	let temp = document.getElementById("CMangaSwitch").checked;
 
 	CMMP.SendMessage("ChangeAddonStatus", temp);
 };
 
 CMMP.ToggleSettingsMenu = function ToggleSettingsMenu() {
-	var setMenu = document.getElementById("CMangaSettingsMenu");
+	let setMenu = document.getElementById("CMangaSettingsMenu");
 	if (setMenu.className == "") {
 		setMenu.className = "hidden";
 	} else {
@@ -349,13 +347,13 @@ CMMP.ToggleSettingsMenu = function ToggleSettingsMenu() {
 };
 
 CMMP.NotificationCheck = function NotificationCheck() {
-	var temp = document.getElementById("CMangaNotifications").checked;
+	let temp = document.getElementById("CMangaNotifications").checked;
 
 	CMMP.SendMessage("ChangeNotificationStatus", temp);
 };
 
 CMMP.CompactCheck = function CompactCheck() {
-	var temp = document.getElementById("CMangaCompact").checked;
+	let temp = document.getElementById("CMangaCompact").checked;
 
 	if (temp) {
 		CMMP.options.mangaViewContainer.classList.remove("CMangaBigLayout");
@@ -370,19 +368,19 @@ CMMP.CompactCheck = function CompactCheck() {
 };
 
 CMMP.PageMarkerCheck = function PageMarkerCheck() {
-	var temp = document.getElementById("CMangaPageCheck").checked;
+	let temp = document.getElementById("CMangaPageCheck").checked;
 
 	CMMP.SendMessage("ChangeShowPageNumber", temp);
 };
 
 CMMP.InfiniteCheck = function InfiniteCheck() {
-	var temp = document.getElementById("CMangaInfinite").checked;
+	let temp = document.getElementById("CMangaInfinite").checked;
 
 	CMMP.SendMessage("ChangeInfiniteScrolling", temp);
 };
 
 CMMP.NetSaveCheck = function NetSaveCheck() {
-	var temp = document.getElementById("CMangaNetSave").checked;
+	let temp = document.getElementById("CMangaNetSave").checked;
 
 	if (temp) {
 		document.getElementById("CMangaMaxUpdateTimeContainer").className = "";
@@ -394,8 +392,8 @@ CMMP.NetSaveCheck = function NetSaveCheck() {
 };
 
 CMMP.ChangeUpdateTime = function ChangeUpdateTime() {
-	var temp = document.getElementById("CMangaUpdateTime");
-	var temp2 = document.getElementById("CMangaMaxUpdateTime");
+	let temp = document.getElementById("CMangaUpdateTime");
+	let temp2 = document.getElementById("CMangaMaxUpdateTime");
 
 	while(parseInt(temp.options[temp.selectedIndex].value) >= parseInt(temp2.options[temp2.selectedIndex].value)) {
 		temp2.selectedIndex++;
@@ -406,8 +404,8 @@ CMMP.ChangeUpdateTime = function ChangeUpdateTime() {
 };
 
 CMMP.ChangeMaxUpdateTime = function ChangeMaxUpdateTime() {
-	var temp = document.getElementById("CMangaUpdateTime");
-	var temp2 = document.getElementById("CMangaMaxUpdateTime");
+	let temp = document.getElementById("CMangaUpdateTime");
+	let temp2 = document.getElementById("CMangaMaxUpdateTime");
 
 	while(parseInt(temp.options[temp.selectedIndex].value) >= parseInt(temp2.options[temp2.selectedIndex].value)) {
 		temp.selectedIndex--;
@@ -420,14 +418,14 @@ CMMP.ChangeMaxUpdateTime = function ChangeMaxUpdateTime() {
 // INITIAL SETTINGS ====================================================================================================
 
 CMMP.AddEvents = function AddEvents(domElem) {
-	var container = document;
+	let container = document;
 
 	if (domElem) {
 		container = domElem;
 	}
 
-	var elems = container.getElementsByClassName('CMangaNameLink');
-	var count = elems.length;
+	let elems = container.getElementsByClassName('CMangaNameLink');
+	let count = elems.length;
 	while(count--) {
 		elems[count].onclick = CMMP.OpenMangaPage;
 	}
@@ -468,10 +466,10 @@ CMMP.PrepareLayout = function PrepareLayout(options) {
 		CMMP.options.mangaViewContainer.classList.add("CMangaBigLayout");
 	}
 
-	var docFrag = document.createDocumentFragment();
+	let docFrag = document.createDocumentFragment();
 
-	var count = 0;
-	var limit = options.mangaList.length;
+	let count = 0;
+	let limit = options.mangaList.length;
 	//A first loop to add the unread mangas
 	while(count < limit) {
 		if (!options.mangaList[count].bRead) {
@@ -492,7 +490,7 @@ CMMP.PrepareLayout = function PrepareLayout(options) {
 
 	CMMP.AddEvents();
 
-	var tempDiv = document.getElementById("CMangaSwitch");
+	let tempDiv = document.getElementById("CMangaSwitch");
 	tempDiv.onchange = CMMP.AddonOnOff;
 
 	tempDiv = document.getElementById("CMangaSettings");
@@ -599,28 +597,28 @@ CMMP.StartUpdating = function StartUpdating() {
 };
 
 
-CMMP.Show = function Show() {
+CMMP.ChangeLastUpdatedAt = function ChangeLastUpdatedAt() {
 	if (!CMMP.options.bCompactDesign) {
 		CMMP.UdapteLastUpdatedAt();
 	}
 };
 
-CMMP.Hide = function Hide() {
-	var updateElems = document.getElementsByClassName("CMangaJustUpdated");
-	var x = updateElems.length;
+CMMP.CleanLastUpdatedAt = function CleanLastUpdatedAt(mangaName, mangaSite) {
+	let mangaId = mangaName.replace(" ", "_") + mangaSite;
 
-	while(x--) {
-		updateElems[x].classList.remove("CMangaJustUpdated");
-	}
+	let updateElem = document.querySelector('#' + mangaId + " .CMangaName");
+
+	updateElem.classList.remove("CMangaJustUpdated");
 };
 
 CMMP.ListenMessages = function ListenMessages(message){
-	console.log("ACMR (panel): Received a message");
-	console.log(message)
+	//console.debug("ACMR (panel): Received a message");
+	//console.debug(message);
 	switch (message.type) {
 		case "SendDataFromMain":
 			CMMP.PrepareLayout(message.parameter);
 			CMMP.SetInitialConfig(message.parameter);
+			CMMP.ChangeLastUpdatedAt();
 			break;
 		case "ReceiveAddonStatus":
 			CMMP.ReceiveAddonStatus(message.parameter);
@@ -662,11 +660,10 @@ CMMP.ListenMessages = function ListenMessages(message){
 };
 
 CMMP.Main = function Main() {
-	console.log("CMMP::Main Started main panel js!");
+	//console.debug("CMMP::Main Started main panel js!");
 
 	browser.runtime.onMessage.addListener(CMMP.ListenMessages);
 
-	CMMP.SendMessage("GetPMOsFromMain");
 	CMMP.SendMessage("GetDataFromMain");
 
 	/*

@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "A Certain Manga Reader",
-	"version": "3.0.0-beta",
+	"version": "3.0b",
 
 	"description": "Read and receive notifications for your mangas with ease.",
 	"homepage_url": "https://github.com/saishy/certainmangareader",
@@ -36,7 +36,6 @@
 		"notifications",
 		"webRequest",
 		"webRequestBlocking",
-		// Manga sites
 		"*://*.bato.to/*",
 		"*://*.mangafox.me/*",
 		"*://*.mangahere.co/*",
